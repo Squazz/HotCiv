@@ -68,27 +68,6 @@ namespace Squazz.HotCiv.Core.Tests
         }
 
         [TestMethod]
-        public void ShouldHaveOceanTileAt1_0()
-        {
-            ITile tile = _game.GetTileAt(new Position(1,0));
-            Assert.AreEqual("ocean", tile.GetTypeString(), "Should have ocean tile at 1,0");
-        }
-
-        [TestMethod]
-        public void ShouldHaveHillTileAt0_1()
-        {
-            ITile tile = _game.GetTileAt(new Position(0,1));
-            Assert.AreEqual("hill", tile.GetTypeString(), "Should have ocean tile at 0,1");
-        }
-
-        [TestMethod]
-        public void ShouldHavemountainTileAt2_2()
-        {
-            ITile tile = _game.GetTileAt(new Position(2,2));
-            Assert.AreEqual("mountain", tile.GetTypeString(), "Should have mountain tile at 2,2");
-        }
-
-        [TestMethod]
         public void ShouldHaveCityAt1_1()
         {
             Assert.IsNotNull(_game.GetCityAt(new Position(1, 1)), "Should have a city at 1,1");
