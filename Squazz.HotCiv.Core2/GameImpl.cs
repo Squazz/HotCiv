@@ -33,7 +33,14 @@ namespace Squazz.HotCiv
 
         public IUnit GetUnitAt(Position p)
         {
-            return null;
+            if (p.Equals(new Position(0, 2)))
+            {
+                return new UnitImpl(Player.RED, "archer");
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public ICity GetCityAt(Position p) { return new CityImpl(_player); }

@@ -54,6 +54,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HotCiv\Squazz.HotCiv.Domain.csproj">
+      <Project>{2EF0E73F-F1EF-43BA-B71A-E63A5DC52525}</Project>
+      <Name>Squazz.HotCiv.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Squazz.HotCiv.Core2\Squazz.HotCiv.Core.csproj">
       <Project>{485d19ee-4ff4-4fbc-9a35-82e7d0463efb}</Project>
       <Name>Squazz.HotCiv.Core</Name>
