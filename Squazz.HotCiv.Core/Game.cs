@@ -37,6 +37,10 @@ namespace Squazz.HotCiv
             {
                 return new Unit(Player.RED, "archer");
             }
+            else if (p.Equals(new Position(3, 2)))
+            {
+                return new Unit(Player.BLUE, "legion");
+            }
             else
             {
                 return null;
@@ -69,16 +73,7 @@ namespace Squazz.HotCiv
                     break;
             }
         }
-
-        public void EndRounds(int rounds=1)
-        {
-            for (int i = 1; i <= rounds; i++)
-            {
-                EndOfTurn();
-                EndOfTurn();
-            }
-        }
-
+        
         public void ChangeWorkForceFocusInCityAt( Position p, String balance ) {}
 
         public void ChangeProductionInCityAt( Position p, String unitType ) {}

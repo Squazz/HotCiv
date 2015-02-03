@@ -24,9 +24,9 @@ namespace Squazz.HotCiv.Core.Tests
         public void ShouldIncreaseAgeBy100EachRound()
         {
             Assert.AreEqual(-4000, _game.GetAge(), "Age should be -4000");
-            _game.EndRounds(1);
+            EndRounds(1);
             Assert.AreEqual(-3900, _game.GetAge(), "Age should be -3900");
-            _game.EndRounds(2);
+            EndRounds(2);
             Assert.AreEqual(-3700, _game.GetAge(), "Age should be -3700");
         }
 
@@ -111,7 +111,7 @@ namespace Squazz.HotCiv.Core.Tests
         }
 
         [TestMethod]
-        public void ArcherAt2_0ShouldBeOwnedByRed()
+        public void SouldStartWithRedArcherAt0_2()
         {
             Position position = new Position(0, 2);
             IUnit unit = _game.GetUnitAt(position);
@@ -121,11 +121,63 @@ namespace Squazz.HotCiv.Core.Tests
         }
 
         [TestMethod]
+        public void ShouldStartWithLegionAt3_2()
+        {
+            Position position = new Position(3, 2);
+            IUnit unit = _game.GetUnitAt(position);
+            Assert.IsNotNull(unit, "We should have a unit at 3,2");
+            Assert.AreEqual("legion", unit.GetTypeString(), "Type should be legion");
+        }
+
+        [TestMethod]
+        public void ShouldStartWithBlueLegionAt3_2()
+        {
+            Position position = new Position(3, 2);
+            IUnit unit = _game.GetUnitAt(position);
+            Assert.IsNotNull(unit, "We should have a unit at 3,2");
+            Assert.AreEqual("legion", unit.GetTypeString(), "Type should be legion");
+            Assert.AreEqual(Player.BLUE, unit.GetOwner(), "Owner should be BLUE");
+        }
+
+        [TestMethod]
         public void ShouldNotHaveAWinnerBefore3000BC()
         {
             Assert.IsNull(_game.GetWinner(), "We shouldn't have a winner in 4000BC");
-            _game.EndRounds(9);
+            EndRounds(9);
             Assert.IsNull(_game.GetWinner(), "We shouldn't have a winner in 3100BC");
+        }
+
+        [TestMethod]
+        public void CitiesShouldStartWithPopulationOf1()
+        {
+            ICity redCity = _game.GetCityAt(new Position(1,1));
+            ICity blueCity = _game.GetCityAt(new Position(4, 1));
+
+            Assert.AreEqual(1, redCity.GetSize(), "RED city should have a size of 1");
+            Assert.AreEqual(1, blueCity.GetSize(), "BLUE city should have a size of 1");
+        }
+
+        [TestMethod]
+        public void CitiesShouldAlwaysHaveaPopulationOf1()
+        {
+            ICity redCity = _game.GetCityAt(new Position(1, 1));
+            ICity blueCity = _game.GetCityAt(new Position(4, 1));
+
+            Assert.AreEqual(1, redCity.GetSize(), "RED city should have a size of 1");
+            Assert.AreEqual(1, blueCity.GetSize(), "BLUE city should have a size of 1");
+            EndRounds(10); // End the game
+            Assert.AreEqual(1, redCity.GetSize(), "RED city should have a size of 1 in the endgame");
+            Assert.AreEqual(1, blueCity.GetSize(), "BLUE city should have a size of 1 in the endgame");
+        }
+
+        // Shortcode for ending 2 turns
+        public void EndRounds(int rounds = 1)
+        {
+            for (int i = 1; i <= rounds; i++)
+            {
+                _game.EndOfTurn();
+                _game.EndOfTurn();
+            }
         }
     }
 }
