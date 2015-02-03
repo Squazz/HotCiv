@@ -39,7 +39,7 @@ namespace Squazz.HotCiv
          * @return the player that has won. If the game is still
          * not finished then return null.
          */
-        Player GetWinner();
+        Player? GetWinner();
 
         /** return the age of the world. Negative numbers represent a world
          * age BC (-4000 equals 4000 BC) while positive numbers are AD.

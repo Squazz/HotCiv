@@ -6,7 +6,7 @@ namespace Squazz.HotCiv
     public class GameImpl : IGame {
 
         private Player _player   = Player.RED;
-        private int _age = 4000;
+        private int _age = -4000;
 
         public ITile GetTileAt(Position p)
         {
@@ -47,7 +47,7 @@ namespace Squazz.HotCiv
 
         public Player GetPlayerInTurn() { return _player; }
 
-        public Player GetWinner() { return _player; }
+        public Player? GetWinner() { return null; }
 
         public int GetAge() { return _age; }
 
@@ -65,7 +65,7 @@ namespace Squazz.HotCiv
                     break;
                 case Player.BLUE:
                     _player = Player.RED;
-                    _age = _age - 100;
+                    _age = _age + 100;
                     break;
             }
         }
