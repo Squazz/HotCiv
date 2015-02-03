@@ -7,7 +7,7 @@ namespace Squazz.HotCiv
 
         private Player _player   = Player.RED;
         private int _age = -4000;
-
+        
         public ITile GetTileAt(Position p)
         {
             Position ocean = new Position(1,0);

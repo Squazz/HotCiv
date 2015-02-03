@@ -109,7 +109,7 @@ namespace Squazz.HotCiv.Core.Tests
         }
 
         [TestMethod]
-        public void BlueShouldOwnCityAt1_1()
+        public void BlueShouldOwnCityAt4_1()
         {
             ICity city = _game.GetCityAt(new Position(4, 1));
             Assert.IsNotNull(city, "Should have a city at 4,1");
