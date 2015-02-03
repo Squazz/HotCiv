@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Squazz.HotCiv
 {
-    class CityImpl : ICity
+    class City : ICity
     {
         private readonly Player _owner;
 
-        public CityImpl(Player owner)
+        public City(Player owner)
         {
             _owner = owner;
         }

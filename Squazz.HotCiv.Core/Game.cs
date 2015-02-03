@@ -3,51 +3,48 @@ using System.Collections.Generic;
 
 namespace Squazz.HotCiv
 {
-    public class GameImpl : IGame {
+    public class Game : IGame {
 
         private Player _player   = Player.RED;
         private int _age = -4000;
+
+        private static Dictionary<Position, City> _cities = new Dictionary<Position, City>();
+        private static Dictionary<Position, Unit> _units = new Dictionary<Position, Unit>();
+        private static Dictionary<Position, Tile> _tiles = new Dictionary<Position, Tile>();
         
-        public ITile GetTileAt(Position p)
+        public Game()
         {
-            Position ocean = new Position(1,0);
-            Position hill = new Position(0,1);
-            Position mountain = new Position(2,2);
-            if (p.equals(ocean))
-            {
-                return new Tile(p, "ocean");
-            }
-            else if (p.equals(hill))
-            {
-                return new Tile(p, "hill");
-            }
-            else if (p.equals(mountain))
-            {
-                return new Tile(p, "mountain");
-            }
-            else
-            {
-                return new Tile(p, "plain");
-            }
+            _cities.Add(new Position(1, 1), new City(Player.RED));
+            _cities.Add(new Position(4, 1), new City(Player.BLUE));
+
+            _units.Add(new Position(0, 2), new Unit(Player.RED, "archer"));
+            _units.Add(new Position(3, 2), new Unit(Player.BLUE, "legion"));
+
+            _tiles.Add(new Position(1, 0), new Tile(new Position(1, 0), "ocean"));
+            _tiles.Add(new Position(0, 1), new Tile(new Position(0, 1), "hill"));
+            _tiles.Add(new Position(2, 2), new Tile(new Position(2, 2), "mountain"));
         }
 
-        public IUnit GetUnitAt(Position p)
+        public ITile GetTileAt(Position position)
         {
-            if (p.Equals(new Position(0, 2)))
-            {
-                return new Unit(Player.RED, "archer");
-            }
-            else if (p.Equals(new Position(3, 2)))
-            {
-                return new Unit(Player.BLUE, "legion");
-            }
-            else
-            {
-                return null;
-            }
+            Tile tile;
+            _tiles.TryGetValue(position, out tile);
+            return tile;
         }
 
-        public ICity GetCityAt(Position p) { return new CityImpl(_player); }
+        public IUnit GetUnitAt(Position position)
+        {
+            Unit unit;
+            _units.TryGetValue(position, out unit);
+            return unit;
+        }
+
+        public ICity GetCityAt(Position position)
+        {
+            City city;
+            _cities.TryGetValue(position, out city);
+            return city;
+        }
 
         public Player GetPlayerInTurn() { return _player; }
 
@@ -74,11 +71,11 @@ namespace Squazz.HotCiv
             }
         }
         
-        public void ChangeWorkForceFocusInCityAt( Position p, String balance ) {}
+        public void ChangeWorkForceFocusInCityAt( Position position, String balance ) {}
 
-        public void ChangeProductionInCityAt( Position p, String unitType ) {}
+        public void ChangeProductionInCityAt( Position position, String unitType ) {}
 
-        public void PerformUnitActionAt( Position p ) {}
+        public void PerformUnitActionAt( Position position ) {}
 
     }
 }

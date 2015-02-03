@@ -7,11 +7,11 @@ namespace Squazz.HotCiv.Core.Tests
     [TestClass]
     public class AlphaCivTests
     {
-        private GameImpl _game;
+        private Game _game;
         [TestInitialize]
         public void Initialize()
         {
-            _game = new GameImpl();
+            _game = new Game();
         }
 
         [TestMethod]
