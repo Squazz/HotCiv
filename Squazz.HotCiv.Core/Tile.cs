@@ -5,12 +5,12 @@ using System.Text;
 
 namespace Squazz.HotCiv
 {
-    class TileImpl : ITile
+    class Tile : ITile
     {
         private readonly Position _position;
         private readonly String _type;
 
-        public TileImpl(Position position, String type)
+        public Tile(Position position, String type)
         {
             _position   = position;
             _type       = type;

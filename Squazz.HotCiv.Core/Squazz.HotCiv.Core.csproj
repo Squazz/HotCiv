@@ -39,15 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CityImpl.cs" />
-    <Compile Include="GameImpl.cs" />
+    <Compile Include="City.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TileImpl.cs" />
-    <Compile Include="UnitImpl.cs" />
+    <Compile Include="Tile.cs" />
+    <Compile Include="Unit.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HotCiv\Squazz.HotCiv.Domain.csproj">
-      <Project>{2EF0E73F-F1EF-43BA-B71A-E63A5DC52525}</Project>
+    <ProjectReference Include="..\Squazz.HotCiv.Domain\Squazz.HotCiv.Domain.csproj">
+      <Project>{2ef0e73f-f1ef-43ba-b71a-e63a5dc52525}</Project>
       <Name>Squazz.HotCiv.Domain</Name>
     </ProjectReference>
   </ItemGroup>

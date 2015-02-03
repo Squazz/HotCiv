@@ -15,19 +15,19 @@ namespace Squazz.HotCiv
             Position mountain = new Position(2,2);
             if (p.equals(ocean))
             {
-                return new TileImpl(p, "ocean");
+                return new Tile(p, "ocean");
             }
             else if (p.equals(hill))
             {
-                return new TileImpl(p, "hill");
+                return new Tile(p, "hill");
             }
             else if (p.equals(mountain))
             {
-                return new TileImpl(p, "mountain");
+                return new Tile(p, "mountain");
             }
             else
             {
-                return new TileImpl(p, "plain");
+                return new Tile(p, "plain");
             }
         }
 
@@ -35,7 +35,7 @@ namespace Squazz.HotCiv
         {
             if (p.Equals(new Position(0, 2)))
             {
-                return new UnitImpl(Player.RED, "archer");
+                return new Unit(Player.RED, "archer");
             }
             else
             {

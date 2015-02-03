@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Squazz.HotCiv
 {
-    class UnitImpl : IUnit
+    class Unit : IUnit
     {
         private readonly Player _owner;
         private readonly String _type;
@@ -14,7 +14,7 @@ namespace Squazz.HotCiv
         private readonly int _defence;
         private int _moves = 1;
 
-        public UnitImpl(Player owner, String type)
+        public Unit(Player owner, String type)
         {
             _owner  = owner;
             _type   = type;
