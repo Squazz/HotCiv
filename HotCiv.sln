@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squazz.HotCiv.Domain", "HotCiv\Squazz.HotCiv.Domain.csproj", "{2EF0E73F-F1EF-43BA-B71A-E63A5DC52525}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squazz.HotCiv.Domain", "Squazz.HotCiv.Domain\Squazz.HotCiv.Domain.csproj", "{2EF0E73F-F1EF-43BA-B71A-E63A5DC52525}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9827B681-A8A4-45E5-B2EA-A7DADAD9D957}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squazz.HotCiv.Core", "Squazz.HotCiv.Core2\Squazz.HotCiv.Core.csproj", "{485D19EE-4FF4-4FBC-9A35-82E7D0463EFB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squazz.HotCiv.Core", "Squazz.HotCiv.Core\Squazz.HotCiv.Core.csproj", "{485D19EE-4FF4-4FBC-9A35-82E7D0463EFB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squazz.HotCiv.Core.Tests", "Squazz.HotCiv.Core.Tests\Squazz.HotCiv.Core.Tests.csproj", "{66530859-2B22-4B44-9B1D-A793F7C38BEC}"
 EndProject

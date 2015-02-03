@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Squazz.HotCiv.Core")]
+[assembly: AssemblyTitle("Squazz.HotCiv.Core2")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Squazz.HotCiv.Core")]
+[assembly: AssemblyProduct("Squazz.HotCiv.Core2")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4ff5f2e0-baea-45d2-b514-889fe8f69c51")]
+[assembly: Guid("35a258d8-3ff9-4291-bedf-b53ea1dabb56")]
 
 // Version information for an assembly consists of the following four values:
 //
