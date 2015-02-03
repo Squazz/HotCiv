@@ -17,6 +17,7 @@ namespace Squazz.HotCiv
         }
 
         public string GetTypeString() { return _type; }
+
         public Position GetPosition() { return _position; }
     }
 }
