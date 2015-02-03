@@ -13,7 +13,7 @@ namespace Squazz.HotCiv.Core.Tests
         }
 
         [TestMethod]
-        public void ShouldStatInAge4000()
+        public void ShouldStatInAge4000BC()
         {
             Assert.AreEqual(-4000, _game.GetAge(), "Age should be -4000");
         }
@@ -135,6 +135,85 @@ namespace Squazz.HotCiv.Core.Tests
             Assert.IsNotNull(unit, "We should have a unit at 3,2");
             Assert.AreEqual("legion", unit.GetTypeString(), "Type should be legion");
             Assert.AreEqual(Player.BLUE, unit.GetOwner(), "Owner should be BLUE");
+        }
+
+        [TestMethod]
+        public void ShouldStartWithSettlerAt4_3()
+        {
+            Position position = new Position(4,3);
+            IUnit unit = _game.GetUnitAt(position);
+            Assert.IsNotNull(unit, "Should have a unit at 4,3");
+            Assert.AreEqual("settler", unit.GetTypeString(), "Type should be settler");
+        }
+
+        [TestMethod]
+        public void ShouldStartWithRedSettlerAt4_3()
+        {
+            Position position = new Position(4, 3);
+            IUnit unit = _game.GetUnitAt(position);
+            Assert.IsNotNull(unit, "Should have a unit at 4,3");
+            Assert.AreEqual("settler", unit.GetTypeString(), "Type should be settler");
+            Assert.AreEqual(Player.RED, unit.GetOwner(), "Owner should be RED");
+        }
+
+        [TestMethod]
+        public void ArchersShouldHave2Attack()
+        {
+            Position position = new Position(0,2);
+            IUnit unit = _game.GetUnitAt(position);
+            Assert.IsNotNull(unit, "Should have a unit at 0,2");
+            Assert.AreEqual("archer", unit.GetTypeString(), "Type should be archer");
+            Assert.AreEqual(2, unit.GetAttackingStrength());
+        }
+
+        [TestMethod]
+        public void ArchersShouldHave3Defence()
+        {
+            Position position = new Position(0, 2);
+            IUnit unit = _game.GetUnitAt(position);
+            Assert.IsNotNull(unit, "Should have a unit at 0,2");
+            Assert.AreEqual("archer", unit.GetTypeString(), "Type should be archer");
+            Assert.AreEqual(3, unit.GetDefensiveStrength());
+        }
+
+        [TestMethod]
+        public void LegionsShouldHave4Attack()
+        {
+            Position position = new Position(3, 2);
+            IUnit unit = _game.GetUnitAt(position);
+            Assert.IsNotNull(unit, "Should have a unit at 3,2");
+            Assert.AreEqual("legion", unit.GetTypeString(), "Type should be legion");
+            Assert.AreEqual(4, unit.GetAttackingStrength());
+        }
+
+        [TestMethod]
+        public void LegionsShouldHave2Defence()
+        {
+            Position position = new Position(3, 2);
+            IUnit unit = _game.GetUnitAt(position);
+            Assert.IsNotNull(unit, "Should have a unit at 3,2");
+            Assert.AreEqual("legion", unit.GetTypeString(), "Type should be legion");
+            Assert.AreEqual(2, unit.GetDefensiveStrength());
+        }
+
+        [TestMethod]
+        public void SettlersShouldHave0Attack()
+        {
+            Position position = new Position(4, 3);
+            IUnit unit = _game.GetUnitAt(position);
+            Assert.IsNotNull(unit, "Should have a unit at 4,3");
+            Assert.AreEqual("settler", unit.GetTypeString(), "Type should be settler");
+            Assert.AreEqual(0, unit.GetAttackingStrength());
+        }
+
+        [TestMethod]
+        public void SettlersShouldHave3Defence()
+        {
+            Position position = new Position(4, 3);
+            IUnit unit = _game.GetUnitAt(position);
+            Assert.IsNotNull(unit, "Should have a unit at 4,3");
+            Assert.AreEqual("settler", unit.GetTypeString(), "Type should be settler");
+            Assert.AreEqual(3, unit.GetDefensiveStrength());
         }
 
         [TestMethod]

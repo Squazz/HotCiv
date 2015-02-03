@@ -28,6 +28,11 @@ namespace Squazz.HotCiv
                 _attack = 4;
                 _defence = 2;
             }
+            else if (type == "settler")
+            {
+                _attack = 0;
+                _defence = 3;
+            }
         }
 
         public string GetTypeString() { return _type; }

@@ -19,6 +19,7 @@ namespace Squazz.HotCiv
 
             _units.Add(new Position(0, 2), new Unit(Player.RED, "archer"));
             _units.Add(new Position(3, 2), new Unit(Player.BLUE, "legion"));
+            _units.Add(new Position(4, 3), new Unit(Player.RED, "settler"));
 
             _tiles.Add(new Position(1, 0), new Tile(new Position(1, 0), "ocean"));
             _tiles.Add(new Position(0, 1), new Tile(new Position(0, 1), "hill"));
