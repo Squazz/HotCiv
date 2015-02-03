@@ -8,9 +8,9 @@ namespace Squazz.HotCiv
         private Player _player   = Player.RED;
         private int _age = -4000;
 
-        private static Dictionary<Position, City> _cities = new Dictionary<Position, City>();
-        private static Dictionary<Position, Unit> _units = new Dictionary<Position, Unit>();
-        private static Dictionary<Position, Tile> _tiles = new Dictionary<Position, Tile>();
+        private Dictionary<Position, City> _cities = new Dictionary<Position, City>();
+        private Dictionary<Position, Unit> _units = new Dictionary<Position, Unit>();
+        private Dictionary<Position, Tile> _tiles = new Dictionary<Position, Tile>();
         
         public Game()
         {

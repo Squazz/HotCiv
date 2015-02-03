@@ -1,13 +1,11 @@
-﻿using System;
-using System.Security.Policy;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Squazz.HotCiv.Core.Tests
 {
     [TestClass]
     public class AlphaCivTests
     {
-        private Game _game;
+        Game _game;
         [TestInitialize]
         public void Initialize()
         {
