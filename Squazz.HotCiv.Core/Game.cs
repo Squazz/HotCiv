@@ -7,9 +7,9 @@ namespace Squazz.HotCiv
         public Player PlayerInTurn { get; private set; }
         public int Age { get; private set; }
 
-        private Dictionary<Position, ICity> _cities = new Dictionary<Position, ICity>();
-        private Dictionary<Position, IUnit> _units = new Dictionary<Position, IUnit>();
-        private Dictionary<Position, ITile> _tiles = new Dictionary<Position, ITile>();
+        private readonly Dictionary<Position, ICity> _cities = new Dictionary<Position, ICity>();
+        private readonly Dictionary<Position, IUnit> _units = new Dictionary<Position, IUnit>();
+        private readonly Dictionary<Position, ITile> _tiles = new Dictionary<Position, ITile>();
         
         public Game()
         {
