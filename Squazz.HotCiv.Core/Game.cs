@@ -23,9 +23,9 @@ namespace Squazz.HotCiv
             _units.Add(new Position(3, 2), new Unit(Player.BLUE, GameConstants.Legion));
             _units.Add(new Position(4, 3), new Unit(Player.RED, GameConstants.Settler));
 
-            _tiles.Add(new Position(1, 0), new Tile(new Position(1, 0), GameConstants.Ocean));
-            _tiles.Add(new Position(0, 1), new Tile(new Position(0, 1), GameConstants.Hills));
-            _tiles.Add(new Position(2, 2), new Tile(new Position(2, 2), GameConstants.Mountains));
+            _tiles.Add(new Position(1, 0), new Tile(GameConstants.Ocean));
+            _tiles.Add(new Position(0, 1), new Tile(GameConstants.Hills));
+            _tiles.Add(new Position(2, 2), new Tile(GameConstants.Mountains));
         }
 
         public ITile GetTileAt(Position position)
