@@ -100,20 +100,20 @@ namespace Squazz.HotCiv.Core.Tests
         }
 
         [TestMethod]
-        public void SouldStartWithArcherAt0_2()
+        public void SouldStartWithArcherAt2_0()
         {
-            Position position = new Position(0, 2);
+            Position position = new Position(2, 0);
             IUnit unit = _game.GetUnitAt(position);
-            Assert.IsNotNull(unit, "We should have a unit at 0,2");
+            Assert.IsNotNull(unit, "We should have a unit at 2,0");
             Assert.AreEqual("archer", unit.GetTypeString(), "Type should be archer");
         }
 
         [TestMethod]
-        public void SouldStartWithRedArcherAt0_2()
+        public void SouldStartWithRedArcherAt2_0()
         {
-            Position position = new Position(0, 2);
+            Position position = new Position(2, 0);
             IUnit unit = _game.GetUnitAt(position);
-            Assert.IsNotNull(unit, "We Should have a unit at 0,2");
+            Assert.IsNotNull(unit, "We Should have a unit at 2,0");
             Assert.AreEqual("archer", unit.GetTypeString(), "Type should be archer");
             Assert.AreEqual(Player.RED, unit.GetOwner(), "Owner should be RED");
         }
@@ -159,9 +159,9 @@ namespace Squazz.HotCiv.Core.Tests
         [TestMethod]
         public void ArchersShouldHave2Attack()
         {
-            Position position = new Position(0,2);
+            Position position = new Position(2,0);
             IUnit unit = _game.GetUnitAt(position);
-            Assert.IsNotNull(unit, "Should have a unit at 0,2");
+            Assert.IsNotNull(unit, "Should have a unit at 0,0");
             Assert.AreEqual("archer", unit.GetTypeString(), "Type should be archer");
             Assert.AreEqual(2, unit.GetAttackingStrength());
         }
@@ -169,9 +169,9 @@ namespace Squazz.HotCiv.Core.Tests
         [TestMethod]
         public void ArchersShouldHave3Defence()
         {
-            Position position = new Position(0, 2);
+            Position position = new Position(2, 0);
             IUnit unit = _game.GetUnitAt(position);
-            Assert.IsNotNull(unit, "Should have a unit at 0,2");
+            Assert.IsNotNull(unit, "Should have a unit at 2,0");
             Assert.AreEqual("archer", unit.GetTypeString(), "Type should be archer");
             Assert.AreEqual(3, unit.GetDefensiveStrength());
         }
@@ -248,13 +248,20 @@ namespace Squazz.HotCiv.Core.Tests
         }
 
         [TestMethod]
-        public void ShouldbeAbleToMoveArcherTo0_3()
+        public void ShouldbeAbleToMoveArcherTo3_0()
         {
-            Position from = new Position(0, 2);
-            Position to = new Position(0, 3);
+            Position from = new Position(2, 0);
+            Position to = new Position(3, 0);
             Assert.IsTrue(_game.MoveUnit(from, to), "We should be able to move the unit");
             Assert.IsNotNull(_game.GetUnitAt(to), "Unit should be at the new position");
             Assert.IsNull(_game.GetUnitAt(from), "The unit should not be at the old position");
+        }
+
+        [TestMethod]
+        public void OnlyOneUnitAtATime()
+        {
+            _game.MoveUnit(new Position(2, 0), new Position(3, 1));
+            _game.MoveUnit(new Position(3, 1), new Position(3, 2));
         }
 
         // Shortcode for ending 2 turns
