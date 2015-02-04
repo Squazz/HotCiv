@@ -9,6 +9,6 @@ namespace Squazz.HotCiv
          * engine, as they correspond to named image files.
          * @return the type type as string
          */
-        String GetTypeString();
+        String Type { get; }
     }
 }

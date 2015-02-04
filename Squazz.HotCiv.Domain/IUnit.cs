@@ -10,12 +10,12 @@ namespace Squazz.HotCiv
          * least those listed in GameConstants, particular variants
          * may define more strings to be valid.
          */
-        String GetTypeString();
+        String Type { get; }
 
         /** return the owner of this unit.
          * @return the player that controls this unit.
          */
-        Player GetOwner();
+        Player Owner { get; }
 
         /** return the move distance left (move count).
          * A move count of N means the unit may travel
@@ -24,16 +24,16 @@ namespace Squazz.HotCiv
          * a new turn starts.
          * @return the move count
          */
-        int GetMoveCount();
+        int Moves { get; set; }
 
         /** return the defensive strength of this unit
          * @return defensive strength
          */
-        int GetDefensiveStrength();
+        int Defense { get; }
 
         /** return the attack strength of this unit
          * @return attack strength
          */
-        int GetAttackingStrength();
+        int Attack { get; }
     }
 }

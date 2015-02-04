@@ -1,25 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Security.Cryptography;
 
 namespace Squazz.HotCiv
 {
     class City : ICity
     {
-        private readonly Player _owner;
+        public Player Owner { get; private set; }
+        public int Size { get; private set; }
+        public String Production { get; private set; }
+        public String WorkforceFocus { get; private set; }
 
         public City(Player owner)
         {
-            _owner = owner;
+            Production = GameConstants.Archer;
+            Size = 1;
+            Owner = owner;
         }
-
-        public Player GetOwner() { return _owner; }
-
-        public int GetSize() { return 1; }
-
-        public string GetProduction() { return "archer"; }
-
-        public string GetWorkforceFocus() { throw new NotImplementedException(); }
     }
 }

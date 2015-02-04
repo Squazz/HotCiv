@@ -33,7 +33,7 @@ namespace Squazz.HotCiv
          * move units and manage cities.
          * @return the player that is in turn
          */
-        Player GetPlayerInTurn();
+        Player PlayerInTurn { get; }
 
         /** return the player that has won the game. 
          * @return the player that has won. If the game is still
@@ -45,7 +45,7 @@ namespace Squazz.HotCiv
          * age BC (-4000 equals 4000 BC) while positive numbers are AD.
          *  @return world age.
          */
-        int GetAge();
+        int Age { get; }
 
         // === Mutator methods ======================================
 

@@ -4,9 +4,8 @@ using System.Collections.Generic;
 namespace Squazz.HotCiv
 {
     public class Game : IGame {
-
-        private Player _player   = Player.RED;
-        private int _age = -4000;
+        public Player PlayerInTurn { get; private set; }
+        public int Age { get; private set; }
 
         private Dictionary<Position, ICity> _cities = new Dictionary<Position, ICity>();
         private Dictionary<Position, IUnit> _units = new Dictionary<Position, IUnit>();
@@ -14,16 +13,19 @@ namespace Squazz.HotCiv
         
         public Game()
         {
+            PlayerInTurn = Player.RED;
+            Age = -4000;
+
             _cities.Add(new Position(1, 1), new City(Player.RED));
             _cities.Add(new Position(4, 1), new City(Player.BLUE));
 
-            _units.Add(new Position(2, 0), new Unit(Player.RED, "archer"));
-            _units.Add(new Position(3, 2), new Unit(Player.BLUE, "legion"));
-            _units.Add(new Position(4, 3), new Unit(Player.RED, "settler"));
+            _units.Add(new Position(2, 0), new Unit(Player.RED, GameConstants.Archer));
+            _units.Add(new Position(3, 2), new Unit(Player.BLUE, GameConstants.Legion));
+            _units.Add(new Position(4, 3), new Unit(Player.RED, GameConstants.Settler));
 
-            _tiles.Add(new Position(1, 0), new Tile(new Position(1, 0), "ocean"));
-            _tiles.Add(new Position(0, 1), new Tile(new Position(0, 1), "hill"));
-            _tiles.Add(new Position(2, 2), new Tile(new Position(2, 2), "mountain"));
+            _tiles.Add(new Position(1, 0), new Tile(new Position(1, 0), GameConstants.Ocean));
+            _tiles.Add(new Position(0, 1), new Tile(new Position(0, 1), GameConstants.Hills));
+            _tiles.Add(new Position(2, 2), new Tile(new Position(2, 2), GameConstants.Mountains));
         }
 
         public ITile GetTileAt(Position position)
@@ -46,16 +48,23 @@ namespace Squazz.HotCiv
             _cities.TryGetValue(position, out city);
             return city;
         }
-
-        public Player GetPlayerInTurn() { return _player; }
-
-        public Player? GetWinner() { return null; }
-
-        public int GetAge() { return _age; }
-
+        
+        public Player? GetWinner()
+        {
+            if (Age == -3000)
+            {
+                return Player.RED;
+            }
+            return null;
+        }
+        
         public bool MoveUnit( Position from, Position to )
         {
-            IUnit unit = this.GetUnitAt(from);
+            if (GetUnitAt(to) != null)
+            {
+                return false;
+            }
+            IUnit unit = GetUnitAt(from);
             _units.Remove(from);
             _units.Add(to, unit);
             return true;
@@ -63,14 +72,14 @@ namespace Squazz.HotCiv
 
         public void EndOfTurn()
         {
-            switch (_player)
+            switch (PlayerInTurn)
             {
                 case Player.RED:
-                    _player = Player.BLUE;
+                    PlayerInTurn = Player.BLUE;
                     break;
                 case Player.BLUE:
-                    _player = Player.RED;
-                    _age = _age + 100;
+                    PlayerInTurn = Player.RED;
+                    Age = Age + 100;
                     break;
             }
         }

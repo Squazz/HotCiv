@@ -15,53 +15,53 @@ namespace Squazz.HotCiv.Core.Tests
         [TestMethod]
         public void ShouldStatInAge4000BC()
         {
-            Assert.AreEqual(-4000, _game.GetAge(), "Age should be -4000");
+            Assert.AreEqual(-4000, _game.Age, "Age should be -4000");
         }
 
         [TestMethod]
         public void ShouldIncreaseAgeBy100EachRound()
         {
-            Assert.AreEqual(-4000, _game.GetAge(), "Age should be -4000");
+            Assert.AreEqual(-4000, _game.Age, "Age should be -4000");
             EndRounds(1);
-            Assert.AreEqual(-3900, _game.GetAge(), "Age should be -3900");
+            Assert.AreEqual(-3900, _game.Age, "Age should be -3900");
             EndRounds(2);
-            Assert.AreEqual(-3700, _game.GetAge(), "Age should be -3700");
+            Assert.AreEqual(-3700, _game.Age, "Age should be -3700");
         }
 
         [TestMethod]
         public void RedShouldBeFirst()
         {
-            Assert.AreEqual(Player.RED, _game.GetPlayerInTurn(), "RED should be the first player");
+            Assert.AreEqual(Player.RED, _game.PlayerInTurn, "RED should be the first player");
         }
 
         [TestMethod]
         public void BlueShouldBeSecond()
         {
             _game.EndOfTurn();
-            Assert.AreEqual(Player.BLUE, _game.GetPlayerInTurn(), "BLUE should be the secund player");
+            Assert.AreEqual(Player.BLUE, _game.PlayerInTurn, "BLUE should be the secund player");
         }
 
         [TestMethod]
         public void RedShouldBeAfterBlue()
         {
-            Assert.AreEqual(Player.RED, _game.GetPlayerInTurn(), "RED should be first");
+            Assert.AreEqual(Player.RED, _game.PlayerInTurn, "RED should be first");
             _game.EndOfTurn();
-            Assert.AreEqual(Player.BLUE, _game.GetPlayerInTurn(), "BLUE should be second");
+            Assert.AreEqual(Player.BLUE, _game.PlayerInTurn, "BLUE should be second");
             _game.EndOfTurn();
-            Assert.AreEqual(Player.RED, _game.GetPlayerInTurn(), "RED should be after BLUE");
+            Assert.AreEqual(Player.RED, _game.PlayerInTurn, "RED should be after BLUE");
 
         }
 
         [TestMethod]
         public void BlueShouldBeAfterRed()
         {
-            Assert.AreEqual(Player.RED, _game.GetPlayerInTurn(), "RED should be first");
+            Assert.AreEqual(Player.RED, _game.PlayerInTurn, "RED should be first");
             _game.EndOfTurn();
-            Assert.AreEqual(Player.BLUE, _game.GetPlayerInTurn(), "BLUE should be second");
+            Assert.AreEqual(Player.BLUE, _game.PlayerInTurn, "BLUE should be second");
             _game.EndOfTurn();
-            Assert.AreEqual(Player.RED, _game.GetPlayerInTurn(), "RED should be after BLUE");
+            Assert.AreEqual(Player.RED, _game.PlayerInTurn, "RED should be after BLUE");
             _game.EndOfTurn();
-            Assert.AreEqual(Player.BLUE, _game.GetPlayerInTurn(), "BLUE should be after RED");
+            Assert.AreEqual(Player.BLUE, _game.PlayerInTurn, "BLUE should be after RED");
 
         }
 
@@ -82,7 +82,7 @@ namespace Squazz.HotCiv.Core.Tests
         {
             ICity city = _game.GetCityAt(new Position(1, 1));
             Assert.IsNotNull(city, "Should have a city at 1,1");
-            Assert.AreEqual(Player.RED, city.GetOwner(), "RED should own city at 1,1");
+            Assert.AreEqual(Player.RED, city.Owner, "RED should own city at 1,1");
         }
 
         [TestMethod]
@@ -90,7 +90,7 @@ namespace Squazz.HotCiv.Core.Tests
         {
             ICity city = _game.GetCityAt(new Position(4, 1));
             Assert.IsNotNull(city, "Should have a city at 4,1");
-            Assert.AreEqual(Player.BLUE, city.GetOwner(), "BLUE should own city at 4,1");
+            Assert.AreEqual(Player.BLUE, city.Owner, "BLUE should own city at 4,1");
         }
 
         [TestMethod]
@@ -105,7 +105,7 @@ namespace Squazz.HotCiv.Core.Tests
             Position position = new Position(2, 0);
             IUnit unit = _game.GetUnitAt(position);
             Assert.IsNotNull(unit, "We should have a unit at 2,0");
-            Assert.AreEqual("archer", unit.GetTypeString(), "Type should be archer");
+            Assert.AreEqual(GameConstants.Archer, unit.Type, "Type should be archer");
         }
 
         [TestMethod]
@@ -114,8 +114,8 @@ namespace Squazz.HotCiv.Core.Tests
             Position position = new Position(2, 0);
             IUnit unit = _game.GetUnitAt(position);
             Assert.IsNotNull(unit, "We Should have a unit at 2,0");
-            Assert.AreEqual("archer", unit.GetTypeString(), "Type should be archer");
-            Assert.AreEqual(Player.RED, unit.GetOwner(), "Owner should be RED");
+            Assert.AreEqual(GameConstants.Archer, unit.Type, "Type should be archer");
+            Assert.AreEqual(Player.RED, unit.Owner, "Owner should be RED");
         }
 
         [TestMethod]
@@ -124,7 +124,7 @@ namespace Squazz.HotCiv.Core.Tests
             Position position = new Position(3, 2);
             IUnit unit = _game.GetUnitAt(position);
             Assert.IsNotNull(unit, "We should have a unit at 3,2");
-            Assert.AreEqual("legion", unit.GetTypeString(), "Type should be legion");
+            Assert.AreEqual("legion", unit.Type, "Type should be legion");
         }
 
         [TestMethod]
@@ -133,8 +133,8 @@ namespace Squazz.HotCiv.Core.Tests
             Position position = new Position(3, 2);
             IUnit unit = _game.GetUnitAt(position);
             Assert.IsNotNull(unit, "We should have a unit at 3,2");
-            Assert.AreEqual("legion", unit.GetTypeString(), "Type should be legion");
-            Assert.AreEqual(Player.BLUE, unit.GetOwner(), "Owner should be BLUE");
+            Assert.AreEqual("legion", unit.Type, "Type should be legion");
+            Assert.AreEqual(Player.BLUE, unit.Owner, "Owner should be BLUE");
         }
 
         [TestMethod]
@@ -143,7 +143,7 @@ namespace Squazz.HotCiv.Core.Tests
             Position position = new Position(4,3);
             IUnit unit = _game.GetUnitAt(position);
             Assert.IsNotNull(unit, "Should have a unit at 4,3");
-            Assert.AreEqual("settler", unit.GetTypeString(), "Type should be settler");
+            Assert.AreEqual("settler", unit.Type, "Type should be settler");
         }
 
         [TestMethod]
@@ -152,8 +152,8 @@ namespace Squazz.HotCiv.Core.Tests
             Position position = new Position(4, 3);
             IUnit unit = _game.GetUnitAt(position);
             Assert.IsNotNull(unit, "Should have a unit at 4,3");
-            Assert.AreEqual("settler", unit.GetTypeString(), "Type should be settler");
-            Assert.AreEqual(Player.RED, unit.GetOwner(), "Owner should be RED");
+            Assert.AreEqual("settler", unit.Type, "Type should be settler");
+            Assert.AreEqual(Player.RED, unit.Owner, "Owner should be RED");
         }
 
         [TestMethod]
@@ -162,8 +162,8 @@ namespace Squazz.HotCiv.Core.Tests
             Position position = new Position(2,0);
             IUnit unit = _game.GetUnitAt(position);
             Assert.IsNotNull(unit, "Should have a unit at 0,0");
-            Assert.AreEqual("archer", unit.GetTypeString(), "Type should be archer");
-            Assert.AreEqual(2, unit.GetAttackingStrength());
+            Assert.AreEqual(GameConstants.Archer, unit.Type, "Type should be archer");
+            Assert.AreEqual(2, unit.Attack);
         }
 
         [TestMethod]
@@ -172,8 +172,8 @@ namespace Squazz.HotCiv.Core.Tests
             Position position = new Position(2, 0);
             IUnit unit = _game.GetUnitAt(position);
             Assert.IsNotNull(unit, "Should have a unit at 2,0");
-            Assert.AreEqual("archer", unit.GetTypeString(), "Type should be archer");
-            Assert.AreEqual(3, unit.GetDefensiveStrength());
+            Assert.AreEqual(GameConstants.Archer, unit.Type, "Type should be archer");
+            Assert.AreEqual(3, unit.Defense);
         }
 
         [TestMethod]
@@ -182,8 +182,8 @@ namespace Squazz.HotCiv.Core.Tests
             Position position = new Position(3, 2);
             IUnit unit = _game.GetUnitAt(position);
             Assert.IsNotNull(unit, "Should have a unit at 3,2");
-            Assert.AreEqual("legion", unit.GetTypeString(), "Type should be legion");
-            Assert.AreEqual(4, unit.GetAttackingStrength());
+            Assert.AreEqual("legion", unit.Type, "Type should be legion");
+            Assert.AreEqual(4, unit.Attack);
         }
 
         [TestMethod]
@@ -192,8 +192,8 @@ namespace Squazz.HotCiv.Core.Tests
             Position position = new Position(3, 2);
             IUnit unit = _game.GetUnitAt(position);
             Assert.IsNotNull(unit, "Should have a unit at 3,2");
-            Assert.AreEqual("legion", unit.GetTypeString(), "Type should be legion");
-            Assert.AreEqual(2, unit.GetDefensiveStrength());
+            Assert.AreEqual("legion", unit.Type, "Type should be legion");
+            Assert.AreEqual(2, unit.Defense);
         }
 
         [TestMethod]
@@ -202,8 +202,8 @@ namespace Squazz.HotCiv.Core.Tests
             Position position = new Position(4, 3);
             IUnit unit = _game.GetUnitAt(position);
             Assert.IsNotNull(unit, "Should have a unit at 4,3");
-            Assert.AreEqual("settler", unit.GetTypeString(), "Type should be settler");
-            Assert.AreEqual(0, unit.GetAttackingStrength());
+            Assert.AreEqual("settler", unit.Type, "Type should be settler");
+            Assert.AreEqual(0, unit.Attack);
         }
 
         [TestMethod]
@@ -212,8 +212,8 @@ namespace Squazz.HotCiv.Core.Tests
             Position position = new Position(4, 3);
             IUnit unit = _game.GetUnitAt(position);
             Assert.IsNotNull(unit, "Should have a unit at 4,3");
-            Assert.AreEqual("settler", unit.GetTypeString(), "Type should be settler");
-            Assert.AreEqual(3, unit.GetDefensiveStrength());
+            Assert.AreEqual("settler", unit.Type, "Type should be settler");
+            Assert.AreEqual(3, unit.Defense);
         }
 
         [TestMethod]
@@ -225,13 +225,20 @@ namespace Squazz.HotCiv.Core.Tests
         }
 
         [TestMethod]
+        public void RedShouldWinInYear3000BC()
+        {
+            EndRounds(10);
+            Assert.IsNotNull(_game.GetWinner(), "We should have a winner in 3000BC");
+        }
+
+        [TestMethod]
         public void CitiesShouldStartWithPopulationOf1()
         {
             ICity redCity = _game.GetCityAt(new Position(1,1));
             ICity blueCity = _game.GetCityAt(new Position(4, 1));
 
-            Assert.AreEqual(1, redCity.GetSize(), "RED city should have a size of 1");
-            Assert.AreEqual(1, blueCity.GetSize(), "BLUE city should have a size of 1");
+            Assert.AreEqual(1, redCity.Size, "RED city should have a size of 1");
+            Assert.AreEqual(1, blueCity.Size, "BLUE city should have a size of 1");
         }
 
         [TestMethod]
@@ -240,11 +247,11 @@ namespace Squazz.HotCiv.Core.Tests
             ICity redCity = _game.GetCityAt(new Position(1, 1));
             ICity blueCity = _game.GetCityAt(new Position(4, 1));
 
-            Assert.AreEqual(1, redCity.GetSize(), "RED city should have a size of 1");
-            Assert.AreEqual(1, blueCity.GetSize(), "BLUE city should have a size of 1");
+            Assert.AreEqual(1, redCity.Size, "RED city should have a size of 1");
+            Assert.AreEqual(1, blueCity.Size, "BLUE city should have a size of 1");
             EndRounds(10); // End the game
-            Assert.AreEqual(1, redCity.GetSize(), "RED city should have a size of 1 in the endgame");
-            Assert.AreEqual(1, blueCity.GetSize(), "BLUE city should have a size of 1 in the endgame");
+            Assert.AreEqual(1, redCity.Size, "RED city should have a size of 1 in the endgame");
+            Assert.AreEqual(1, blueCity.Size, "BLUE city should have a size of 1 in the endgame");
         }
 
         [TestMethod]
@@ -260,8 +267,8 @@ namespace Squazz.HotCiv.Core.Tests
         [TestMethod]
         public void OnlyOneUnitAtATime()
         {
-            _game.MoveUnit(new Position(2, 0), new Position(3, 1));
-            _game.MoveUnit(new Position(3, 1), new Position(3, 2));
+            Assert.IsTrue(_game.MoveUnit(new Position(2, 0), new Position(3, 1)), "Should be able to make the first move");
+            Assert.IsFalse(_game.MoveUnit(new Position(3, 1), new Position(3, 2)), "There's already a legion here");
         }
 
         // Shortcode for ending 2 turns

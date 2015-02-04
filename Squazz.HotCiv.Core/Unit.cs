@@ -1,48 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Squazz.HotCiv
 {
     class Unit : IUnit
     {
-        private readonly Player _owner;
-        private readonly String _type;
-        private readonly int _attack;
-        private readonly int _defence;
-        private int _moves = 1;
+        public Player Owner { get; private set; }
+        public String Type { get; private set; }
+        public int Attack { get; private set; }
+        public int Defense { get; private set; }
+        public int Moves { get; set; }
 
         public Unit(Player owner, String type)
         {
-            _owner  = owner;
-            _type   = type;
-            if (type == "archer")
+            Owner = owner;
+            Type = type;
+            Moves = 1;
+            switch (type)
             {
-                _attack = 2;
-                _defence = 3;
-            }
-            else if (type == "legion")
-            {
-                _attack = 4;
-                _defence = 2;
-            }
-            else if (type == "settler")
-            {
-                _attack = 0;
-                _defence = 3;
+                case "archer":
+                    Attack = 2;
+                    Defense = 3;
+                    break;
+                case "legion":
+                    Attack = 4;
+                    Defense = 2;
+                    break;
+                case "settler":
+                    Attack = 0;
+                    Defense = 3;
+                    break;
             }
         }
-
-        public string GetTypeString() { return _type; }
-
-        public Player GetOwner() { return _owner; }
-
-        public int GetMoveCount() { return _moves; }
-
-        public int GetDefensiveStrength() {  return _defence; }
-
-        public int GetAttackingStrength() { return _attack; }
     }
 }
