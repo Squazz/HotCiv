@@ -271,6 +271,51 @@ namespace Squazz.HotCiv.Core.Tests
             Assert.IsFalse(_game.MoveUnit(new Position(3, 1), new Position(3, 2)), "There's already a legion here");
         }
 
+        [TestMethod]
+        public void ShouldHaveOceanAt0_1()
+        {
+            ITile tile = _game.GetTileAt(new Position(0, 1));
+            Assert.IsNotNull(tile, "There should be a tile at 0,1");
+            Assert.AreEqual(GameConstants.Ocean, tile.Type, "Tile should be ocean");
+        }
+
+        [TestMethod]
+        public void ShouldHaveHillsAt1_0()
+        {
+            ITile tile = _game.GetTileAt(new Position(1, 0));
+            Assert.IsNotNull(tile, "There should be a tile at 1,0");
+            Assert.AreEqual(GameConstants.Hills, tile.Type, "Tile should be hills");
+        }
+
+        [TestMethod]
+        public void ShouldHaveMountainsAt2_2()
+        {
+            ITile tile = _game.GetTileAt(new Position(2, 2));
+            Assert.IsNotNull(tile, "There should be a tile at 2,2");
+            Assert.AreEqual(GameConstants.Mountains, tile.Type, "Tile should be hills");
+        }
+
+        [TestMethod]
+        public void ShouldHavePlainIfNothingElse()
+        {
+            Position ocean = new Position(0, 1);
+            Position hills = new Position(1, 0);
+            Position mountains = new Position(2, 2);
+            for (int i = 0; i <= 15; i++)
+            {
+                for (int j = 0; j <= 15; j++)
+                {
+                    Position position = new Position(i, j);
+                    if (!Equals(position, ocean) && !Equals(position, hills) && !Equals(position, mountains))
+                    {
+                        ITile tile = _game.GetTileAt(position);
+                        Assert.IsNotNull(tile, "There should be a tile at " + i + "," + j);
+                        Assert.AreEqual(GameConstants.Plains, tile.Type, "Tile should be plains");
+                    }
+                }
+            }
+        }
+
         // Shortcode for ending 2 turns
         public void EndRounds(int rounds = 1)
         {

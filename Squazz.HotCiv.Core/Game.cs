@@ -16,16 +16,31 @@ namespace Squazz.HotCiv
             PlayerInTurn = Player.RED;
             Age = -4000;
 
+            // Add Standard Cities
             _cities.Add(new Position(1, 1), new City(Player.RED));
             _cities.Add(new Position(4, 1), new City(Player.BLUE));
 
+            // Add standard units
             _units.Add(new Position(2, 0), new Unit(Player.RED, GameConstants.Archer));
             _units.Add(new Position(3, 2), new Unit(Player.BLUE, GameConstants.Legion));
             _units.Add(new Position(4, 3), new Unit(Player.RED, GameConstants.Settler));
 
-            _tiles.Add(new Position(1, 0), new Tile(GameConstants.Ocean));
-            _tiles.Add(new Position(0, 1), new Tile(GameConstants.Hills));
+            // Decorate the board with tiles
+            _tiles.Add(new Position(0, 1), new Tile(GameConstants.Ocean));
+            _tiles.Add(new Position(1, 0), new Tile(GameConstants.Hills));
             _tiles.Add(new Position(2, 2), new Tile(GameConstants.Mountains));
+            // Decorate the rest of the board with plains tiles
+            for (int i = 0; i <= 15; i++)
+            {
+                for (int j = 0; j <= 15; j++)
+                {
+                    Position position = new Position(i, j);
+                    if (GetTileAt(position) == null)
+                    {
+                        _tiles.Add(position, new Tile(GameConstants.Plains));
+                    }
+                }
+            }
         }
 
         public ITile GetTileAt(Position position)
