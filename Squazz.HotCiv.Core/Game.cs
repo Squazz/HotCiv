@@ -75,14 +75,31 @@ namespace Squazz.HotCiv
         
         public bool MoveUnit( Position from, Position to )
         {
-            if (GetUnitAt(to) != null)
+            if (Equals(GetUnitAt(from).Owner, PlayerInTurn))
+            {
+                IUnit otherUnit = GetUnitAt(to);
+                if (otherUnit != null)
+                {
+                    if (Equals(otherUnit.Owner, GetUnitAt(from).Owner))
+                    {
+                        // We cannot have two units at the same tile
+                        return false;
+                    }
+                    else
+                    {
+                        // If the other unit is an enemy, attack and destroy it
+                        _units.Remove(to);
+                    }
+                }
+                IUnit unit = GetUnitAt(from);
+                _units.Remove(from);
+                _units.Add(to, unit);
+                return true;
+            }
+            else
             {
                 return false;
             }
-            IUnit unit = GetUnitAt(from);
-            _units.Remove(from);
-            _units.Add(to, unit);
-            return true;
         }
 
         public void EndOfTurn()

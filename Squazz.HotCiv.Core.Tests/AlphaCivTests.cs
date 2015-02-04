@@ -267,8 +267,10 @@ namespace Squazz.HotCiv.Core.Tests
         [TestMethod]
         public void OnlyOneUnitAtATime()
         {
-            Assert.IsTrue(_game.MoveUnit(new Position(2, 0), new Position(3, 1)), "Should be able to make the first move");
-            Assert.IsFalse(_game.MoveUnit(new Position(3, 1), new Position(3, 2)), "There's already a legion here");
+            Assert.IsTrue(_game.MoveUnit(new Position(2, 0), new Position(3, 1)), "Should be able to make the archers first move");
+            Assert.IsTrue(_game.MoveUnit(new Position(4, 3), new Position(4, 2)), "Should be able to make the settlers first move");
+            EndRounds(1);
+            Assert.IsFalse(_game.MoveUnit(new Position(3, 1), new Position(4, 2)), "Shouldn't be able to make the archers second move");
         }
 
         [TestMethod]
@@ -314,6 +316,65 @@ namespace Squazz.HotCiv.Core.Tests
                     }
                 }
             }
+        }
+
+        [TestMethod]
+        public void RedShouldBeAbleToMoveOwnUnits()
+        {
+            Assert.IsTrue(_game.MoveUnit(new Position(2, 0), new Position(3, 1)), "Should be able to move the red archer");
+        }
+
+        [TestMethod]
+        public void BlueShouldBeAbleToMoveOwnUnits()
+        {
+            _game.EndOfTurn();
+            Assert.IsTrue(_game.MoveUnit(new Position(3, 2), new Position(3, 1)), "Should be able to move the legion");
+        }
+
+        [TestMethod]
+        public void RedShouldNotBeAbleToMoveBluesUnits()
+        {
+            _game.EndOfTurn();
+            Assert.IsFalse(_game.MoveUnit(new Position(2, 0), new Position(3, 1)), "Should be able to move the red archer");
+        }
+
+        [TestMethod]
+        public void BlueShouldNotBeAbleToMoveRedsUnits()
+        {
+            Assert.IsFalse(_game.MoveUnit(new Position(3, 2), new Position(3, 1)), "Should be able to move the legion");
+        }
+
+        [TestMethod]
+        public void ArcherWinsIfItAttacksTheLegion()
+        {
+            _game.EndOfTurn();
+            Assert.IsTrue(_game.MoveUnit(new Position(3, 2), new Position(3, 1)), "Should be able to move the legion");
+            Assert.AreEqual(_game.GetUnitAt(new Position(3, 1)).Type, GameConstants.Legion, "The unit at 3,1 should now be the legion");
+            _game.EndOfTurn();
+            Assert.IsTrue(_game.MoveUnit(new Position(2, 0), new Position(3, 1)), "Should be able to attack with the archer");
+            Assert.AreEqual(_game.GetUnitAt(new Position(3,1)).Type,GameConstants.Archer, "The unit at 3,1 should now be the archer");
+        }
+
+        [TestMethod]
+        public void LegionWinsIfItAttacksTheArcher()
+        {
+            Assert.IsTrue(_game.MoveUnit(new Position(2, 0), new Position(3, 1)), "Should be able to attack with the archer");
+            Assert.AreEqual(_game.GetUnitAt(new Position(3, 1)).Type, GameConstants.Archer, "The unit at 3,1 should now be the archer");
+            _game.EndOfTurn();
+            Assert.IsTrue(_game.MoveUnit(new Position(3, 2), new Position(3, 1)), "Should be able to move the legion");
+            Assert.AreEqual(_game.GetUnitAt(new Position(3, 1)).Type, GameConstants.Legion, "The unit at 3,1 should now be the legion");
+        }
+
+        [TestMethod]
+        public void CitiesStartWith0ProdtionAccumulated()
+        {
+
+        }
+
+        [TestMethod]
+        public void CitiesProduces6ProductionEachRound()
+        {
+            
         }
 
         // Shortcode for ending 2 turns
