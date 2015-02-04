@@ -368,13 +368,24 @@ namespace Squazz.HotCiv.Core.Tests
         [TestMethod]
         public void CitiesStartWith0ProdtionAccumulated()
         {
-
+            Assert.AreEqual(0,_game.GetCityAt(new Position(1, 1)).Vault, "REDs city should start with 0 production accumulated");
         }
 
         [TestMethod]
         public void CitiesProduces6ProductionEachRound()
         {
-            
+            Position redCityPosition = new Position(1, 1);
+            ICity redCity = _game.GetCityAt(redCityPosition);
+            Position blueCityPosition = new Position(4, 1);
+            ICity blueCity = _game.GetCityAt(blueCityPosition);
+            Assert.AreEqual(0, redCity.Vault, "REDs city should start with 0 production accumulated");
+            Assert.AreEqual(0, blueCity.Vault, "BLUEs city should start with 0 production accumulated");
+            EndRounds();
+            Assert.AreEqual(6, redCity.Vault, "REDs city should now have 6 production accumulated");
+            Assert.AreEqual(6, blueCity.Vault, "BLUEs city should now have 6 production accumulated");
+            EndRounds(2);
+            Assert.AreEqual(18, redCity.Vault, "REDs city should now have 18 production accumulated");
+            Assert.AreEqual(18, blueCity.Vault, "BLUEs city should now have 18 production accumulated");
         }
 
         // Shortcode for ending 2 turns

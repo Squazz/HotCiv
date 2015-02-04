@@ -112,6 +112,8 @@ namespace Squazz.HotCiv
                 case Player.BLUE:
                     PlayerInTurn = Player.RED;
                     Age = Age + 100;
+                    GetCityAt(new Position(1, 1)).Vault = GetCityAt(new Position(1, 1)).Vault + 6;
+                    GetCityAt(new Position(4, 1)).Vault = GetCityAt(new Position(4, 1)).Vault + 6;
                     break;
             }
         }
