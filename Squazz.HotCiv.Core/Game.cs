@@ -8,9 +8,9 @@ namespace Squazz.HotCiv
         private Player _player   = Player.RED;
         private int _age = -4000;
 
-        private Dictionary<Position, City> _cities = new Dictionary<Position, City>();
-        private Dictionary<Position, Unit> _units = new Dictionary<Position, Unit>();
-        private Dictionary<Position, Tile> _tiles = new Dictionary<Position, Tile>();
+        private Dictionary<Position, ICity> _cities = new Dictionary<Position, ICity>();
+        private Dictionary<Position, IUnit> _units = new Dictionary<Position, IUnit>();
+        private Dictionary<Position, ITile> _tiles = new Dictionary<Position, ITile>();
         
         public Game()
         {
@@ -28,21 +28,21 @@ namespace Squazz.HotCiv
 
         public ITile GetTileAt(Position position)
         {
-            Tile tile;
+            ITile tile;
             _tiles.TryGetValue(position, out tile);
             return tile;
         }
 
         public IUnit GetUnitAt(Position position)
         {
-            Unit unit;
+            IUnit unit;
             _units.TryGetValue(position, out unit);
             return unit;
         }
 
         public ICity GetCityAt(Position position)
         {
-            City city;
+            ICity city;
             _cities.TryGetValue(position, out city);
             return city;
         }
@@ -53,9 +53,12 @@ namespace Squazz.HotCiv
 
         public int GetAge() { return _age; }
 
-        public bool MoveUnit( Position from, Position to ) 
+        public bool MoveUnit( Position from, Position to )
         {
-            return false;
+            IUnit unit = this.GetUnitAt(from);
+            _units.Remove(from);
+            _units.Add(to, unit);
+            return true;
         }
 
         public void EndOfTurn()

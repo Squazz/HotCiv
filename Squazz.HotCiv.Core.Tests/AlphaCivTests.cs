@@ -247,6 +247,16 @@ namespace Squazz.HotCiv.Core.Tests
             Assert.AreEqual(1, blueCity.GetSize(), "BLUE city should have a size of 1 in the endgame");
         }
 
+        [TestMethod]
+        public void ShouldbeAbleToMoveArcherTo0_3()
+        {
+            Position from = new Position(0, 2);
+            Position to = new Position(0, 3);
+            Assert.IsTrue(_game.MoveUnit(from, to), "We should be able to move the unit");
+            Assert.IsNotNull(_game.GetUnitAt(to), "Unit should be at the new position");
+            Assert.IsNull(_game.GetUnitAt(from), "The unit should not be at the old position");
+        }
+
         // Shortcode for ending 2 turns
         public void EndRounds(int rounds = 1)
         {
