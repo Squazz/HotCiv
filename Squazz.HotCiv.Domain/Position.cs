@@ -14,14 +14,7 @@ namespace Squazz.HotCiv
 
         public int Row { get; private set; }
         public int Column { get; private set; }
-
-        public bool equals(Object o) {
-            if (o == null) { return false; }
-            if (o.GetType() != typeof(Position)) { return false; }
-            Position other = (Position) o;
-            return Row==other.Row && Column==other.Column;
-        }
-
+        
         public override bool Equals(Object o)
         {
             Position other = o as Position;
