@@ -9,7 +9,6 @@ namespace Squazz.HotCiv
         public int Size { get; private set; }
         public String Production { get; private set; }
         public int Vault { get; set; }
-
         public String WorkforceFocus { get; private set; }
 
         public City(Player owner)

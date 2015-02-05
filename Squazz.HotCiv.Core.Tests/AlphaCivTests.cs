@@ -274,18 +274,24 @@ namespace Squazz.HotCiv.Core.Tests
         }
 
         [TestMethod]
-        public void ShouldHaveOceanAt0_1()
+        public void ShouldNotBeAbleToExecuteMoveActionIfNoUnitAtOrigin()
         {
-            ITile tile = _game.GetTileAt(new Position(0, 1));
-            Assert.IsNotNull(tile, "There should be a tile at 0,1");
+            Assert.IsFalse(_game.MoveUnit(new Position(0,0), new Position(0,1)));
+        }
+
+        [TestMethod]
+        public void ShouldHaveOceanAt1_0()
+        {
+            ITile tile = _game.GetTileAt(new Position(1, 0));
+            Assert.IsNotNull(tile, "There should be a tile at 1,0");
             Assert.AreEqual(GameConstants.Ocean, tile.Type, "Tile should be ocean");
         }
 
         [TestMethod]
-        public void ShouldHaveHillsAt1_0()
+        public void ShouldHaveHillsAt0_1()
         {
-            ITile tile = _game.GetTileAt(new Position(1, 0));
-            Assert.IsNotNull(tile, "There should be a tile at 1,0");
+            ITile tile = _game.GetTileAt(new Position(0, 1));
+            Assert.IsNotNull(tile, "There should be a tile at 0,1");
             Assert.AreEqual(GameConstants.Hills, tile.Type, "Tile should be hills");
         }
 
@@ -386,6 +392,19 @@ namespace Squazz.HotCiv.Core.Tests
             EndRounds(2);
             Assert.AreEqual(18, redCity.Vault, "REDs city should now have 18 production accumulated");
             Assert.AreEqual(18, blueCity.Vault, "BLUEs city should now have 18 production accumulated");
+        }
+
+        [TestMethod]
+        public void UnitsCannotMoveOurMountains()
+        {
+            _game.EndOfTurn();
+            Assert.IsFalse(_game.MoveUnit(new Position(3,2), new Position(2,2)));
+        }
+
+        [TestMethod]
+        public void UnitsCannotMoveOurOcean()
+        {
+            Assert.IsFalse(_game.MoveUnit(new Position(2, 0), new Position(1, 0)));
         }
 
         // Shortcode for ending 2 turns

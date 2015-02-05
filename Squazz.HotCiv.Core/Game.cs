@@ -26,8 +26,8 @@ namespace Squazz.HotCiv
             _units.Add(new Position(4, 3), new Unit(Player.RED, GameConstants.Settler));
 
             // Decorate the board with tiles
-            _tiles.Add(new Position(0, 1), new Tile(GameConstants.Ocean));
-            _tiles.Add(new Position(1, 0), new Tile(GameConstants.Hills));
+            _tiles.Add(new Position(1, 0), new Tile(GameConstants.Ocean));
+            _tiles.Add(new Position(0, 1), new Tile(GameConstants.Hills));
             _tiles.Add(new Position(2, 2), new Tile(GameConstants.Mountains));
             // Decorate the rest of the board with plains tiles
             for (int i = 0; i <= 15; i++)
@@ -46,22 +46,19 @@ namespace Squazz.HotCiv
         public ITile GetTileAt(Position position)
         {
             ITile tile;
-            _tiles.TryGetValue(position, out tile);
-            return tile;
+            return _tiles.TryGetValue(position, out tile) ? tile : null;
         }
 
         public IUnit GetUnitAt(Position position)
         {
             IUnit unit;
-            _units.TryGetValue(position, out unit);
-            return unit;
+            return _units.TryGetValue(position, out unit) ? unit : null;
         }
 
         public ICity GetCityAt(Position position)
         {
             ICity city;
-            _cities.TryGetValue(position, out city);
-            return city;
+            return _cities.TryGetValue(position, out city) ? city : null;
         }
         
         public Player? GetWinner()
@@ -75,31 +72,37 @@ namespace Squazz.HotCiv
         
         public bool MoveUnit( Position from, Position to )
         {
-            if (Equals(GetUnitAt(from).Owner, PlayerInTurn))
+            if (GetUnitAt(from) != null)
             {
-                IUnit otherUnit = GetUnitAt(to);
-                if (otherUnit != null)
+                if (Equals(GetUnitAt(from).Owner, PlayerInTurn))
                 {
-                    if (Equals(otherUnit.Owner, GetUnitAt(from).Owner))
+                    if (Equals(GetTileAt(to).Type, GameConstants.Mountains))
                     {
-                        // We cannot have two units at the same tile
                         return false;
                     }
-                    else
+                    if (Equals(GetTileAt(to).Type, GameConstants.Ocean))
                     {
+                        return false;
+                    }
+                    IUnit otherUnit = GetUnitAt(to);
+                    if (otherUnit != null)
+                    {
+                        if (Equals(otherUnit.Owner, GetUnitAt(from).Owner))
+                        {
+                            // We cannot have two units at the same tile
+                            return false;
+                        }
                         // If the other unit is an enemy, attack and destroy it
                         _units.Remove(to);
                     }
+                    IUnit unit = GetUnitAt(from);
+                    _units.Remove(from);
+                    _units.Add(to, unit);
+                    return true;
                 }
-                IUnit unit = GetUnitAt(from);
-                _units.Remove(from);
-                _units.Add(to, unit);
-                return true;
-            }
-            else
-            {
                 return false;
             }
+            return false;
         }
 
         public void EndOfTurn()
