@@ -18,7 +18,7 @@ namespace Squazz.HotCiv
          * @return a string type defining the unit under production,
          * see GameConstants for valid values.
          */
-        String Production { get; }
+        String Production { get; set; }
 
         /** return the amount of wealth in the citys vault.
          * @return a int defining the amount of wealth in the citys vault.

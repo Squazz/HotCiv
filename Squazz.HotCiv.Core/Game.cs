@@ -7,6 +7,9 @@ namespace Squazz.HotCiv
         public Player PlayerInTurn { get; private set; }
         public int Age { get; private set; }
 
+        private readonly ICity _redCity;
+        private readonly ICity _blueCity;
+
         private readonly Dictionary<Position, ICity> _cities = new Dictionary<Position, ICity>();
         private readonly Dictionary<Position, IUnit> _units = new Dictionary<Position, IUnit>();
         private readonly Dictionary<Position, ITile> _tiles = new Dictionary<Position, ITile>();
@@ -29,24 +32,15 @@ namespace Squazz.HotCiv
             _tiles.Add(new Position(1, 0), new Tile(GameConstants.Ocean));
             _tiles.Add(new Position(0, 1), new Tile(GameConstants.Hills));
             _tiles.Add(new Position(2, 2), new Tile(GameConstants.Mountains));
-            // Decorate the rest of the board with plains tiles
-            for (int i = 0; i <= 15; i++)
-            {
-                for (int j = 0; j <= 15; j++)
-                {
-                    Position position = new Position(i, j);
-                    if (GetTileAt(position) == null)
-                    {
-                        _tiles.Add(position, new Tile(GameConstants.Plains));
-                    }
-                }
-            }
+
+            _redCity = GetCityAt(new Position(1, 1));
+            _blueCity = GetCityAt(new Position(4, 1));
         }
 
         public ITile GetTileAt(Position position)
         {
             ITile tile;
-            return _tiles.TryGetValue(position, out tile) ? tile : null;
+            return _tiles.TryGetValue(position, out tile) ? tile : new Tile(GameConstants.Plains);
         }
 
         public IUnit GetUnitAt(Position position)
@@ -113,18 +107,67 @@ namespace Squazz.HotCiv
                     PlayerInTurn = Player.BLUE;
                     break;
                 case Player.BLUE:
-                    PlayerInTurn = Player.RED;
+                    // First, create units
+                    CreateUnits();
+
+                    // Then add production
+                    _redCity.Vault = _redCity.Vault + 6;
+                    _blueCity.Vault = _blueCity.Vault + 6;
+                    
+                    // Lastly advance age and change PlayerInTurn
                     Age = Age + 100;
-                    GetCityAt(new Position(1, 1)).Vault = GetCityAt(new Position(1, 1)).Vault + 6;
-                    GetCityAt(new Position(4, 1)).Vault = GetCityAt(new Position(4, 1)).Vault + 6;
+                    PlayerInTurn = Player.RED;
                     break;
             }
         }
         
         public void ChangeWorkForceFocusInCityAt( Position position, String balance ) {}
 
-        public void ChangeProductionInCityAt( Position position, String unitType ) {}
+        public void ChangeProductionInCityAt(Position position, String unitType)
+        {
+            GetCityAt(position).Production = unitType;
+        }
 
         public void PerformUnitActionAt( Position position ) {}
+
+        public void CreateUnits()
+        {
+            if (_redCity.Production != null && _redCity.Vault >= 10)
+            {
+                if (_redCity.Production == GameConstants.Archer)
+                {
+                    _units.Add(new Position(1, 1), new Unit(Player.RED, GameConstants.Archer));
+                    _redCity.Vault = _redCity.Vault - 10;
+                }
+                if (_redCity.Production == GameConstants.Legion && _redCity.Vault >= 15)
+                {
+                    _units.Add(new Position(1, 1), new Unit(Player.RED, GameConstants.Legion));
+                    _redCity.Vault = _redCity.Vault - 15;
+                }
+                if (_redCity.Production == GameConstants.Settler && _redCity.Vault >= 30)
+                {
+                    _units.Add(new Position(1, 1), new Unit(Player.RED, GameConstants.Settler));
+                    _redCity.Vault = _redCity.Vault - 30;
+                }
+            }
+            if (_blueCity.Production != null && _blueCity.Vault >= 10)
+            {
+                if (_blueCity.Production == GameConstants.Archer)
+                {
+                    _units.Add(new Position(4, 1), new Unit(Player.BLUE, GameConstants.Archer));
+                    _blueCity.Vault = _blueCity.Vault - 10;
+                }
+                if (_blueCity.Production == GameConstants.Legion && _redCity.Vault >= 15)
+                {
+                    _units.Add(new Position(4, 1), new Unit(Player.BLUE, GameConstants.Legion));
+                    _blueCity.Vault = _blueCity.Vault - 15;
+                }
+                if (_blueCity.Production == GameConstants.Settler && _redCity.Vault >= 30)
+                {
+                    _units.Add(new Position(4, 1), new Unit(Player.BLUE, GameConstants.Settler));
+                    _blueCity.Vault = _blueCity.Vault - 30;
+                }
+            }
+        }
     }
 }

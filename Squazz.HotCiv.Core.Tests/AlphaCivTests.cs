@@ -398,13 +398,57 @@ namespace Squazz.HotCiv.Core.Tests
         public void UnitsCannotMoveOurMountains()
         {
             _game.EndOfTurn();
-            Assert.IsFalse(_game.MoveUnit(new Position(3,2), new Position(2,2)));
+            Assert.IsFalse(_game.MoveUnit(new Position(3,2), new Position(2,2)), "We shouldn't be able to move units over mountains");
         }
 
         [TestMethod]
         public void UnitsCannotMoveOurOcean()
         {
-            Assert.IsFalse(_game.MoveUnit(new Position(2, 0), new Position(1, 0)));
+            Assert.IsFalse(_game.MoveUnit(new Position(2, 0), new Position(1, 0)), "We shouldn't be able to move units over ocean");
+        }
+
+        [TestMethod]
+        public void RedShouldBeAbleToProduceAnArcher()
+        {
+            Position redCityPosition = new Position(1, 1);
+            ICity redCity = _game.GetCityAt(redCityPosition);
+            EndRounds(2);
+            Assert.AreEqual(12, redCity.Vault, "Our city should have enough production to create a unit");
+            _game.ChangeProductionInCityAt(redCityPosition, GameConstants.Archer);
+            EndRounds(1);
+            Assert.IsNotNull(_game.GetUnitAt(redCityPosition), "We should now have produced a unit");
+            Assert.AreEqual(GameConstants.Archer, _game.GetUnitAt(redCityPosition).Type, "The type of our newly produces unit should be archer");
+        }
+
+        [TestMethod]
+        public void RedProducingAUnitShouldSubsrtractTheCostFromTheVault()
+        {
+            RedShouldBeAbleToProduceAnArcher();
+            Position redCityPosition = new Position(1, 1);
+            ICity redCity = _game.GetCityAt(redCityPosition);
+            Assert.AreEqual(8, redCity.Vault, "Our city should now have 8 production");
+        }
+
+        [TestMethod]
+        public void BlueShouldBeAbleToProduceAnArcher()
+        {
+            Position blueCityPosition = new Position(4, 1);
+            ICity blueCity = _game.GetCityAt(blueCityPosition);
+            EndRounds(2);
+            Assert.AreEqual(12, blueCity.Vault, "Out city should have enough production to create a unit");
+            _game.ChangeProductionInCityAt(blueCityPosition, GameConstants.Archer);
+            EndRounds(1);
+            Assert.IsNotNull(_game.GetUnitAt(blueCityPosition), "We should now have produced a unit");
+            Assert.AreEqual(GameConstants.Archer, _game.GetUnitAt(blueCityPosition).Type, "The type of our newly produces unit should be archer");
+        }
+
+        [TestMethod]
+        public void BlueProducingAUnitShouldSubsrtractTheCostFromTheVault()
+        {
+            BlueShouldBeAbleToProduceAnArcher();
+            Position blueCityPosition = new Position(4, 1);
+            ICity blueCity = _game.GetCityAt(blueCityPosition);
+            Assert.AreEqual(8, blueCity.Vault, "Our city should now have 8 production");
         }
 
         // Shortcode for ending 2 turns
