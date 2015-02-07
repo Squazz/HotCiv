@@ -435,7 +435,7 @@ namespace Squazz.HotCiv.Core.Tests
             Position blueCityPosition = new Position(4, 1);
             ICity blueCity = _game.GetCityAt(blueCityPosition);
             EndRounds(2);
-            Assert.AreEqual(12, blueCity.Vault, "Out city should have enough production to create a unit");
+            Assert.AreEqual(12, blueCity.Vault, "Our city should have enough production to create a unit");
             _game.ChangeProductionInCityAt(blueCityPosition, GameConstants.Archer);
             EndRounds(1);
             Assert.IsNotNull(_game.GetUnitAt(blueCityPosition), "We should now have produced a unit");
@@ -449,6 +449,72 @@ namespace Squazz.HotCiv.Core.Tests
             Position blueCityPosition = new Position(4, 1);
             ICity blueCity = _game.GetCityAt(blueCityPosition);
             Assert.AreEqual(8, blueCity.Vault, "Our city should now have 8 production");
+        }
+
+        [TestMethod]
+        public void ShouldResetproductionAfterProducingAUnit()
+        {
+            Position cityPosition = new Position(1, 1);
+            ICity city = _game.GetCityAt(cityPosition);
+            EndRounds(2);
+
+            Assert.AreEqual(12, city.Vault, "Our city should have enough production to create a unit");
+            _game.ChangeProductionInCityAt(cityPosition, GameConstants.Archer);
+            EndRounds(1);
+
+            Assert.IsNotNull(_game.GetUnitAt(cityPosition), "We should now have produced a unit");
+            Assert.AreEqual(GameConstants.Archer, _game.GetUnitAt(cityPosition).Type, "The type of our newly produces unit should be archer");
+            Assert.AreEqual(null, city.Production, "The city should not produce anything anymore");
+        }
+
+        [TestMethod]
+        public void PlaceProducedUnitToTheNorthIfThereIsAUnitInTheRedCity() 
+        {
+            Position cityPosition = new Position(1, 1);
+            ICity city = _game.GetCityAt(cityPosition);
+            EndRounds(2);
+
+            Assert.AreEqual(12, city.Vault, "Our city should have enough production to create a unit");
+            _game.ChangeProductionInCityAt(cityPosition, GameConstants.Archer);
+            EndRounds(1);
+
+            Assert.IsNotNull(_game.GetUnitAt(cityPosition), "We should now have produced a unit");
+            Assert.AreEqual(GameConstants.Archer, _game.GetUnitAt(cityPosition).Type, "The type of our newly produces unit should be archer");
+            Assert.AreEqual(8, city.Vault, "Our city should now have 8 production");
+            EndRounds(1);
+
+            Assert.AreEqual(14, city.Vault, "Our city should now have 14 production");
+            _game.ChangeProductionInCityAt(cityPosition, GameConstants.Archer);
+            EndRounds(1);
+
+            Position newPosition = new Position(0, 1);
+            Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should now have placed the unit to the north");
+            Assert.AreEqual(GameConstants.Archer, _game.GetUnitAt(newPosition).Type, "The type of our newly produces unit should be archer");
+        }
+
+        [TestMethod]
+        public void PlaceProducedUnitToTheNorthIfThereIsAUnitInTheBlueCity()
+        {
+            Position cityPosition = new Position(4, 1);
+            ICity city = _game.GetCityAt(cityPosition);
+            EndRounds(2);
+
+            Assert.AreEqual(12, city.Vault, "Our city should have enough production to create a unit");
+            _game.ChangeProductionInCityAt(cityPosition, GameConstants.Archer);
+            EndRounds(1);
+
+            Assert.IsNotNull(_game.GetUnitAt(cityPosition), "We should now have produced a unit");
+            Assert.AreEqual(GameConstants.Archer, _game.GetUnitAt(cityPosition).Type, "The type of our newly produces unit should be archer");
+            Assert.AreEqual(8, city.Vault, "Our city should now have 8 production");
+            EndRounds(1);
+
+            Assert.AreEqual(14, city.Vault, "Our city should now have 14 production");
+            _game.ChangeProductionInCityAt(cityPosition, GameConstants.Archer);
+            EndRounds(1);
+
+            Position newPosition = new Position(3, 1);
+            Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should now have placed the unit to the north");
+            Assert.AreEqual(GameConstants.Archer, _game.GetUnitAt(newPosition).Type, "The type of our newly produces unit should be archer");
         }
 
         // Shortcode for ending 2 turns
