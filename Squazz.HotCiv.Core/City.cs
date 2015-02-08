@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Cryptography;
 
 namespace Squazz.HotCiv
 {
@@ -10,12 +9,15 @@ namespace Squazz.HotCiv
         public String Production { get; set; }
         public int Vault { get; set; }
         public String WorkforceFocus { get; private set; }
+        public Position Position { get; private set; }
 
-        public City(Player owner)
+        public City(Player owner, Position position)
         {
             Vault = 0;
             Size = 1;
             Owner = owner;
+            Position = position;
+            WorkforceFocus = null;
         }
     }
 }

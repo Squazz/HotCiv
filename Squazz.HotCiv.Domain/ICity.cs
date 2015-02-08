@@ -31,5 +31,7 @@ namespace Squazz.HotCiv
          */
         String WorkforceFocus { get; }
 
+        Position Position { get; }
+
     }
 }

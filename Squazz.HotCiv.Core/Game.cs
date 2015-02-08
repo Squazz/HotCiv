@@ -20,8 +20,8 @@ namespace Squazz.HotCiv
             Age = -4000;
 
             // Add Standard Cities
-            _cities.Add(new Position(1, 1), new City(Player.RED));
-            _cities.Add(new Position(4, 1), new City(Player.BLUE));
+            _cities.Add(new Position(1, 1), new City(Player.RED, new Position(1, 1)));
+            _cities.Add(new Position(4, 1), new City(Player.BLUE, new Position(4, 1)));
 
             // Add standard units
             _units.Add(new Position(2, 0), new Unit(Player.RED, GameConstants.Archer));
@@ -70,14 +70,8 @@ namespace Squazz.HotCiv
             {
                 if (Equals(GetUnitAt(from).Owner, PlayerInTurn))
                 {
-                    if (Equals(GetTileAt(to).Type, GameConstants.Mountains))
-                    {
+                    if (!ValidPlaceForUnit(to))
                         return false;
-                    }
-                    if (Equals(GetTileAt(to).Type, GameConstants.Ocean))
-                    {
-                        return false;
-                    }
                     IUnit otherUnit = GetUnitAt(to);
                     if (otherUnit != null)
                     {
@@ -130,30 +124,28 @@ namespace Squazz.HotCiv
 
         public void PerformUnitActionAt( Position position ) {}
 
-        public void CreateUnits()
+        private void CreateUnits()
         {
             if (WeCanProduce(_redCity))
             {
-                Position redPosition = new Position(1, 1);
-                if (_units.ContainsKey(redPosition)) redPosition = new Position(0, 1);
+                Position position = EnsureProperUnitPlacement(_redCity.Position);
 
-                _units.Add(redPosition, new Unit(_redCity.Owner, _redCity.Production));
+                _units.Add(position, new Unit(_redCity.Owner, _redCity.Production));
                 _redCity.Vault = _redCity.Vault - 10;
                 _redCity.Production = null;
             }
 
             if (WeCanProduce(_blueCity))
             {
-                Position bluePosition = new Position(4, 1);
-                if (_units.ContainsKey(bluePosition)) bluePosition = new Position(3, 1);
+                Position position = EnsureProperUnitPlacement(_blueCity.Position);
 
-                _units.Add(bluePosition, new Unit(_blueCity.Owner, _blueCity.Production));
+                _units.Add(position, new Unit(_blueCity.Owner, _blueCity.Production));
                 _blueCity.Vault = _blueCity.Vault - 10;
                 _blueCity.Production = null;
             }
         }
 
-        public bool WeCanProduce(ICity city)
+        private bool WeCanProduce(ICity city)
         {
             int wealth = city.Vault;
             String production = city.Production;
@@ -167,9 +159,33 @@ namespace Squazz.HotCiv
             return wealth >= unitPrice;
         }
 
-        public void EnsureProperUnitProductionPlacement()
+        private Position EnsureProperUnitPlacement(Position position)
         {
-            
+            if (_units.ContainsKey(position) || !ValidPlaceForUnit(position))
+                position = new Position(position.Row - 1, position.Column);
+            if (_units.ContainsKey(position) || !ValidPlaceForUnit(position))
+                position = new Position(position.Row, position.Column + 1);
+            if (_units.ContainsKey(position) || !ValidPlaceForUnit(position))
+                position = new Position(position.Row + 1, position.Column);
+            if (_units.ContainsKey(position) || !ValidPlaceForUnit(position))
+                position = new Position(position.Row + 1, position.Column);
+            if (_units.ContainsKey(position) || !ValidPlaceForUnit(position))
+                position = new Position(position.Row, position.Column - 1);
+            if (_units.ContainsKey(position) || !ValidPlaceForUnit(position))
+                position = new Position(position.Row, position.Column - 1);
+            if (_units.ContainsKey(position) || !ValidPlaceForUnit(position))
+                position = new Position(position.Row - 1, position.Column);
+            if (_units.ContainsKey(position) || !ValidPlaceForUnit(position))
+                position = new Position(position.Row - 1, position.Column);
+
+            return position;
+        }
+
+        private bool ValidPlaceForUnit(Position position)
+        {
+            return 
+                !Equals(GetTileAt(position).Type, GameConstants.Mountains) && 
+                !Equals(GetTileAt(position).Type, GameConstants.Ocean);
         }
     }
 }
