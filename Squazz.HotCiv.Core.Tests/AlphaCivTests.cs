@@ -517,6 +517,88 @@ namespace Squazz.HotCiv.Core.Tests
             Assert.AreEqual(GameConstants.Archer, _game.GetUnitAt(newPosition).Type, "The type of our newly produces unit should be archer");
         }
 
+        [TestMethod]
+        public void AlwaysPlaceProducedUnitCorrectly()
+        {
+            Position redCityPosition = new Position(1, 1);
+            Position blueCityPosition = new Position(4, 1);
+            Assert.IsNotNull(_game.GetUnitAt(new Position(2, 0)), "We should have a unit here from the start");
+            EndRounds(2);
+
+            // Start producing all of the units
+            _game.ChangeProductionInCityAt(redCityPosition, GameConstants.Archer);
+            _game.ChangeProductionInCityAt(blueCityPosition, GameConstants.Archer);
+            EndRounds(2);
+
+            _game.ChangeProductionInCityAt(redCityPosition, GameConstants.Archer);
+            _game.ChangeProductionInCityAt(blueCityPosition, GameConstants.Archer);
+            EndRounds(2);
+
+            _game.ChangeProductionInCityAt(redCityPosition, GameConstants.Archer);
+            _game.ChangeProductionInCityAt(blueCityPosition, GameConstants.Archer);
+            EndRounds(2);
+
+            _game.ChangeProductionInCityAt(redCityPosition, GameConstants.Archer);
+            _game.ChangeProductionInCityAt(blueCityPosition, GameConstants.Archer);
+            EndRounds(2);
+
+            _game.ChangeProductionInCityAt(redCityPosition, GameConstants.Archer);
+            _game.ChangeProductionInCityAt(blueCityPosition, GameConstants.Archer);
+            EndRounds(1);
+
+            _game.ChangeProductionInCityAt(redCityPosition, GameConstants.Archer);
+            _game.ChangeProductionInCityAt(blueCityPosition, GameConstants.Archer);
+            EndRounds(1);
+
+            _game.ChangeProductionInCityAt(blueCityPosition, GameConstants.Archer);
+            EndRounds(2);
+
+            _game.ChangeProductionInCityAt(blueCityPosition, GameConstants.Archer);
+            EndRounds(1);
+
+
+            // Test the red units
+            Position newPosition = new Position(0, 0);
+            Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should now have produced a unit");
+            newPosition = new Position(0, 1);
+            Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should now have produced a unit");
+            newPosition = new Position(0, 2);
+            Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should now have produced a unit");
+            newPosition = new Position(1, 0);
+            Assert.IsNull(_game.GetUnitAt(newPosition), "We should not have produced a unit in the ocean");
+            newPosition = new Position(1, 1);
+            Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should now have produced a unit");
+            newPosition = new Position(1, 2);
+            Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should now have produced a unit");
+            newPosition = new Position(2, 0);
+            Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should have a unit here from the start");
+            newPosition = new Position(2, 1);
+            Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should now have produced a unit");
+            newPosition = new Position(2, 2);
+            Assert.IsNull(_game.GetUnitAt(newPosition), "We should not have produced a unit on a mountain");
+
+            // Test the blue units
+            newPosition = new Position(3, 0);
+            Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should now have produced a unit");
+            newPosition = new Position(3, 1);
+            Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should now have produced a unit");
+            newPosition = new Position(3, 2);
+            Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should have a unit here from the start");
+            newPosition = new Position(4, 0);
+            Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should now have produced a unit");
+            newPosition = new Position(4, 1);
+            Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should now have produced a unit");
+            newPosition = new Position(4, 2);
+            Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should now have produced a unit");
+            newPosition = new Position(5, 0);
+            Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should have a unit here from the start");
+            newPosition = new Position(5, 1);
+            Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should now have produced a unit");
+            newPosition = new Position(5, 2);
+            Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should now have produced a unit");
+            
+        }
+
         // Shortcode for ending 2 turns
         public void EndRounds(int rounds = 1)
         {
