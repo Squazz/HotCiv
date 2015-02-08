@@ -132,55 +132,40 @@ namespace Squazz.HotCiv
 
         public void CreateUnits()
         {
-            if (_redCity.Production != null && _redCity.Vault >= 10)
+            if (WeCanProduce(_redCity))
             {
                 Position redPosition = new Position(1, 1);
-                if (_units.ContainsKey(redPosition)) redPosition = new Position(0, 1);
 
-                if (_redCity.Production == GameConstants.Archer)
-                {
-                    _units.Add(redPosition, new Unit(Player.RED, GameConstants.Archer));
-                    _redCity.Vault = _redCity.Vault - 10;
-                    _redCity.Production = null;
-                }
-                if (_redCity.Production == GameConstants.Legion && _redCity.Vault >= 15)
-                {
-                    _units.Add(redPosition, new Unit(Player.RED, GameConstants.Legion));
-                    _redCity.Vault = _redCity.Vault - 15;
-                    _redCity.Production = null;
-                }
-                if (_redCity.Production == GameConstants.Settler && _redCity.Vault >= 30)
-                {
-                    _units.Add(redPosition, new Unit(Player.RED, GameConstants.Settler));
-                    _redCity.Vault = _redCity.Vault - 30;
-                    _redCity.Production = null;
-                }
+                _units.Add(redPosition, new Unit(_redCity.Owner, _redCity.Production));
+                _redCity.Vault = _redCity.Vault - 10;
+                _redCity.Production = null;
             }
 
-            Position bluePosition = new Position(4, 1);
-            if (_units.ContainsKey(bluePosition)) bluePosition = new Position(3, 1);
-
-            if (_blueCity.Production != null && _blueCity.Vault >= 10)
+            if (WeCanProduce(_blueCity))
             {
-                if (_blueCity.Production == GameConstants.Archer)
-                {
-                    _units.Add(bluePosition, new Unit(Player.BLUE, GameConstants.Archer));
-                    _blueCity.Vault = _blueCity.Vault - 10;
-                    _blueCity.Production = null;
-                }
-                if (_blueCity.Production == GameConstants.Legion && _redCity.Vault >= 15)
-                {
-                    _units.Add(bluePosition, new Unit(Player.BLUE, GameConstants.Legion));
-                    _blueCity.Vault = _blueCity.Vault - 15;
-                    _blueCity.Production = null;
-                }
-                if (_blueCity.Production == GameConstants.Settler && _redCity.Vault >= 30)
-                {
-                    _units.Add(bluePosition, new Unit(Player.BLUE, GameConstants.Settler));
-                    _blueCity.Vault = _blueCity.Vault - 30;
-                    _blueCity.Production = null;
-                }
+                Position redPosition = new Position(1, 1);
+
+                _units.Add(redPosition, new Unit(_blueCity.Owner, _blueCity.Production));
+                _redCity.Vault = _redCity.Vault - 10;
+                _redCity.Production = null;
             }
+        }
+
+        public bool WeCanProduce(ICity city)
+        {
+            int wealth = city.Vault;
+            String production = city.Production;
+
+            int unitPrice = 10; // Assume we are producing an archer
+            if (production == GameConstants.Legion) unitPrice = 15;
+            if (production == GameConstants.Settler) unitPrice = 30;
+
+            return wealth >= unitPrice;
+        }
+
+        public void EnsureProperUnitProductionPlacement()
+        {
+            
         }
     }
 }
