@@ -45,6 +45,7 @@
     <Compile Include="Position.cs" />
     <Compile Include="ITile.cs" />
     <Compile Include="IUnit.cs" />
+    <Compile Include="Strategies\IAgeStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

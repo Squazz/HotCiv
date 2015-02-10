@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Squazz.HotCiv.Strategies;
 
 namespace Squazz.HotCiv
 {
@@ -9,13 +10,15 @@ namespace Squazz.HotCiv
 
         private readonly ICity _redCity;
         private readonly ICity _blueCity;
+        private readonly IAgeStrategy _ageStrategy;
 
         private readonly Dictionary<Position, ICity> _cities = new Dictionary<Position, ICity>();
         private readonly Dictionary<Position, IUnit> _units = new Dictionary<Position, IUnit>();
         private readonly Dictionary<Position, ITile> _tiles = new Dictionary<Position, ITile>();
         
-        public Game()
+        public Game(IAgeStrategy ageStrategy)
         {
+            _ageStrategy = ageStrategy;
             PlayerInTurn = Player.RED;
             Age = -4000;
 

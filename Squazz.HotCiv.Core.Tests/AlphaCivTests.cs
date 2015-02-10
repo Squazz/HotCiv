@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Squazz.HotCiv.Strategies;
 
 namespace Squazz.HotCiv.Core.Tests
 {
@@ -9,7 +10,7 @@ namespace Squazz.HotCiv.Core.Tests
         [TestInitialize]
         public void Initialize()
         {
-            _game = new Game();
+            _game = new Game(new AgeStrategyLinear());
         }
 
         [TestMethod]
