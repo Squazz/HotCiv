@@ -43,6 +43,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\AgeStrategyLinear.cs" />
+    <Compile Include="Strategies\WinningStrategyRedWins.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="Unit.cs" />
   </ItemGroup>

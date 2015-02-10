@@ -11,14 +11,17 @@ namespace Squazz.HotCiv
         private readonly ICity _redCity;
         private readonly ICity _blueCity;
         private readonly IAgeStrategy _ageStrategy;
+        private readonly IWinningStrategy _winningStrategy;
 
         private readonly Dictionary<Position, ICity> _cities = new Dictionary<Position, ICity>();
         private readonly Dictionary<Position, IUnit> _units = new Dictionary<Position, IUnit>();
         private readonly Dictionary<Position, ITile> _tiles = new Dictionary<Position, ITile>();
         
-        public Game(IAgeStrategy ageStrategy)
+        public Game(IAgeStrategy ageStrategy, IWinningStrategy winningStrategy)
         {
             _ageStrategy = ageStrategy;
+            _winningStrategy = winningStrategy;
+
             PlayerInTurn = Player.RED;
             Age = -4000;
 
@@ -60,11 +63,7 @@ namespace Squazz.HotCiv
         
         public Player? GetWinner()
         {
-            if (Age == -3000)
-            {
-                return Player.RED;
-            }
-            return null;
+            return _winningStrategy.GetWinner(Age);
         }
         
         public bool MoveUnit( Position from, Position to )
@@ -112,7 +111,7 @@ namespace Squazz.HotCiv
                     _blueCity.Vault = _blueCity.Vault + 6;
                     
                     // Lastly advance age and change PlayerInTurn
-                    Age = Age + 100;
+                    Age = _ageStrategy.CalculateNewAge(Age);
                     PlayerInTurn = Player.RED;
                     break;
             }
