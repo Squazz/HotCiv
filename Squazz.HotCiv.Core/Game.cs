@@ -75,6 +75,7 @@ namespace Squazz.HotCiv
                     if (!ValidPlaceForUnit(to))
                         return false;
                     IUnit otherUnit = GetUnitAt(to);
+                    ICity targetCity = GetCityAt(to);
                     if (otherUnit != null)
                     {
                         if (Equals(otherUnit.Owner, GetUnitAt(from).Owner))
@@ -84,6 +85,15 @@ namespace Squazz.HotCiv
                         }
                         // If the other unit is an enemy, attack and destroy it
                         _units.Remove(to);
+                    }
+
+                    if (targetCity != null)
+                    {
+                        if (!Equals(targetCity.Owner, GetUnitAt(from).Owner))
+                        {
+                            _cities.Remove(to);
+                            _cities.Add(to, new City(Player.RED, to));
+                        }
                     }
                     IUnit unit = GetUnitAt(from);
                     _units.Remove(from);

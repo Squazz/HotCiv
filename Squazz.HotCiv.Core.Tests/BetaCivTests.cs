@@ -53,6 +53,15 @@ namespace Squazz.HotCiv.Core.Tests
             Assert.AreEqual(2008, _game.Age);
         }
 
+        [TestMethod]
+        public void ShouldTakeOverCityWhenAttackingIt()
+        {
+            _game.MoveUnit(new Position(2, 0), new Position(3, 1));
+            _game.MoveUnit(new Position(3, 1), new Position(4, 1));
+            Assert.AreEqual(Player.RED, _game.GetUnitAt(new Position(4, 1)).Owner);
+            Assert.AreEqual(Player.RED,_game.GetCityAt(new Position(4,1)).Owner);
+        }
+
         // Shortcode for ending 2 turns
         private void EndRounds(int rounds = 1)
         {
