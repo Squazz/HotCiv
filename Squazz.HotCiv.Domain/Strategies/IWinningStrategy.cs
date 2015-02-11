@@ -4,6 +4,6 @@ namespace Squazz.HotCiv.Strategies
 {
     public interface IWinningStrategy
     {
-        Player? GetWinner(int age, Dictionary<Position, ICity> cities = null);
+        Player? GetWinner(int age, Dictionary<Position, ICity> cities);
     }
 }
