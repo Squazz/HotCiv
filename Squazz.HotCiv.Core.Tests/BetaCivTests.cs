@@ -62,6 +62,17 @@ namespace Squazz.HotCiv.Core.Tests
             Assert.AreEqual(Player.RED,_game.GetCityAt(new Position(4,1)).Owner);
         }
 
+        [TestMethod]
+        public void RedShouldWinAfterCapturingBluesCity()
+        {
+            _game.MoveUnit(new Position(2, 0), new Position(3, 1));
+            _game.MoveUnit(new Position(3, 1), new Position(4, 1));
+            Assert.AreEqual(Player.RED, _game.GetUnitAt(new Position(4, 1)).Owner);
+            Assert.AreEqual(Player.RED, _game.GetCityAt(new Position(4, 1)).Owner);
+            EndRounds();
+            Assert.AreEqual(Player.RED, _game.GetWinner());
+        }
+
         // Shortcode for ending 2 turns
         private void EndRounds(int rounds = 1)
         {

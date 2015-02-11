@@ -68,41 +68,36 @@ namespace Squazz.HotCiv
         
         public bool MoveUnit( Position from, Position to )
         {
-            if (GetUnitAt(from) != null)
-            {
-                if (Equals(GetUnitAt(from).Owner, PlayerInTurn))
-                {
-                    if (!ValidPlaceForUnit(to))
-                        return false;
-                    IUnit otherUnit = GetUnitAt(to);
-                    ICity targetCity = GetCityAt(to);
-                    if (otherUnit != null)
-                    {
-                        if (Equals(otherUnit.Owner, GetUnitAt(from).Owner))
-                        {
-                            // We cannot have two units at the same tile
-                            return false;
-                        }
-                        // If the other unit is an enemy, attack and destroy it
-                        _units.Remove(to);
-                    }
-
-                    if (targetCity != null)
-                    {
-                        if (!Equals(targetCity.Owner, GetUnitAt(from).Owner))
-                        {
-                            _cities.Remove(to);
-                            _cities.Add(to, new City(Player.RED, to));
-                        }
-                    }
-                    IUnit unit = GetUnitAt(from);
-                    _units.Remove(from);
-                    _units.Add(to, unit);
-                    return true;
-                }
+            if (GetUnitAt(from) == null) return false;
+            if (!Equals(GetUnitAt(from).Owner, PlayerInTurn)) return false;
+            if (!ValidPlaceForUnit(to))
                 return false;
+
+            IUnit otherUnit = GetUnitAt(to);
+            ICity targetCity = GetCityAt(to);
+            if (otherUnit != null)
+            {
+                if (Equals(otherUnit.Owner, GetUnitAt(from).Owner))
+                {
+                    // We cannot have two units at the same tile
+                    return false;
+                }
+                // If the other unit is an enemy, attack and destroy it
+                _units.Remove(to);
             }
-            return false;
+
+            if (targetCity != null)
+            {
+                if (!Equals(targetCity.Owner, GetUnitAt(from).Owner))
+                {
+                    _cities.Remove(to);
+                    _cities.Add(to, new City(Player.RED, to));
+                }
+            }
+            IUnit unit = GetUnitAt(from);
+            _units.Remove(from);
+            _units.Add(to, unit);
+            return true;
         }
 
         public void EndOfTurn()
