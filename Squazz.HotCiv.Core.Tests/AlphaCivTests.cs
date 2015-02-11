@@ -23,7 +23,7 @@ namespace Squazz.HotCiv.Core.Tests
         public void ShouldIncreaseAgeBy100EachRound()
         {
             Assert.AreEqual(-4000, _game.Age, "Age should be -4000");
-            EndRounds(1);
+            EndRounds();
             Assert.AreEqual(-3900, _game.Age, "Age should be -3900");
             EndRounds(2);
             Assert.AreEqual(-3700, _game.Age, "Age should be -3700");
@@ -270,7 +270,7 @@ namespace Squazz.HotCiv.Core.Tests
         {
             Assert.IsTrue(_game.MoveUnit(new Position(2, 0), new Position(3, 1)), "Should be able to make the archers first move");
             Assert.IsTrue(_game.MoveUnit(new Position(4, 3), new Position(4, 2)), "Should be able to make the settlers first move");
-            EndRounds(1);
+            EndRounds();
             Assert.IsFalse(_game.MoveUnit(new Position(3, 1), new Position(4, 2)), "Shouldn't be able to make the archers second move");
         }
 
@@ -416,7 +416,7 @@ namespace Squazz.HotCiv.Core.Tests
             EndRounds(2);
             Assert.AreEqual(12, redCity.Vault, "Our city should have enough production to create a unit");
             _game.ChangeProductionInCityAt(redCityPosition, GameConstants.Archer);
-            EndRounds(1);
+            EndRounds();
             Assert.IsNotNull(_game.GetUnitAt(redCityPosition), "We should now have produced a unit");
             Assert.AreEqual(GameConstants.Archer, _game.GetUnitAt(redCityPosition).Type, "The type of our newly produces unit should be archer");
         }
@@ -438,7 +438,7 @@ namespace Squazz.HotCiv.Core.Tests
             EndRounds(2);
             Assert.AreEqual(12, blueCity.Vault, "Our city should have enough production to create a unit");
             _game.ChangeProductionInCityAt(blueCityPosition, GameConstants.Archer);
-            EndRounds(1);
+            EndRounds();
             Assert.IsNotNull(_game.GetUnitAt(blueCityPosition), "We should now have produced a unit");
             Assert.AreEqual(GameConstants.Archer, _game.GetUnitAt(blueCityPosition).Type, "The type of our newly produces unit should be archer");
         }
@@ -461,7 +461,7 @@ namespace Squazz.HotCiv.Core.Tests
 
             Assert.AreEqual(12, city.Vault, "Our city should have enough production to create a unit");
             _game.ChangeProductionInCityAt(cityPosition, GameConstants.Archer);
-            EndRounds(1);
+            EndRounds();
 
             Assert.IsNotNull(_game.GetUnitAt(cityPosition), "We should now have produced a unit");
             Assert.AreEqual(GameConstants.Archer, _game.GetUnitAt(cityPosition).Type, "The type of our newly produces unit should be archer");
@@ -477,16 +477,16 @@ namespace Squazz.HotCiv.Core.Tests
 
             Assert.AreEqual(12, city.Vault, "Our city should have enough production to create a unit");
             _game.ChangeProductionInCityAt(cityPosition, GameConstants.Archer);
-            EndRounds(1);
+            EndRounds();
 
             Assert.IsNotNull(_game.GetUnitAt(cityPosition), "We should now have produced a unit");
             Assert.AreEqual(GameConstants.Archer, _game.GetUnitAt(cityPosition).Type, "The type of our newly produces unit should be archer");
             Assert.AreEqual(8, city.Vault, "Our city should now have 8 production");
-            EndRounds(1);
+            EndRounds();
 
             Assert.AreEqual(14, city.Vault, "Our city should now have 14 production");
             _game.ChangeProductionInCityAt(cityPosition, GameConstants.Archer);
-            EndRounds(1);
+            EndRounds();
 
             Position newPosition = new Position(0, 1);
             Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should now have placed the unit to the north");
@@ -502,16 +502,16 @@ namespace Squazz.HotCiv.Core.Tests
 
             Assert.AreEqual(12, city.Vault, "Our city should have enough production to create a unit");
             _game.ChangeProductionInCityAt(cityPosition, GameConstants.Archer);
-            EndRounds(1);
+            EndRounds();
 
             Assert.IsNotNull(_game.GetUnitAt(cityPosition), "We should now have produced a unit");
             Assert.AreEqual(GameConstants.Archer, _game.GetUnitAt(cityPosition).Type, "The type of our newly produces unit should be archer");
             Assert.AreEqual(8, city.Vault, "Our city should now have 8 production");
-            EndRounds(1);
+            EndRounds();
 
             Assert.AreEqual(14, city.Vault, "Our city should now have 14 production");
             _game.ChangeProductionInCityAt(cityPosition, GameConstants.Archer);
-            EndRounds(1);
+            EndRounds();
 
             Position newPosition = new Position(3, 1);
             Assert.IsNotNull(_game.GetUnitAt(newPosition), "We should now have placed the unit to the north");
@@ -545,17 +545,17 @@ namespace Squazz.HotCiv.Core.Tests
 
             _game.ChangeProductionInCityAt(redCityPosition, GameConstants.Archer);
             _game.ChangeProductionInCityAt(blueCityPosition, GameConstants.Archer);
-            EndRounds(1);
+            EndRounds();
 
             _game.ChangeProductionInCityAt(redCityPosition, GameConstants.Archer);
             _game.ChangeProductionInCityAt(blueCityPosition, GameConstants.Archer);
-            EndRounds(1);
+            EndRounds();
 
             _game.ChangeProductionInCityAt(blueCityPosition, GameConstants.Archer);
             EndRounds(2);
 
             _game.ChangeProductionInCityAt(blueCityPosition, GameConstants.Archer);
-            EndRounds(1);
+            EndRounds();
 
 
             // Test the red units
@@ -601,7 +601,7 @@ namespace Squazz.HotCiv.Core.Tests
         }
 
         // Shortcode for ending 2 turns
-        public void EndRounds(int rounds = 1)
+        private void EndRounds(int rounds = 1)
         {
             for (int i = 1; i <= rounds; i++)
             {
