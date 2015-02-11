@@ -63,7 +63,7 @@ namespace Squazz.HotCiv
         
         public Player? GetWinner()
         {
-            return _winningStrategy.GetWinner(Age);
+            return _winningStrategy.GetWinner(Age, _cities);
         }
         
         public bool MoveUnit( Position from, Position to )
