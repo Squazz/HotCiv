@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace Squazz.HotCiv.Strategies
 {
@@ -8,7 +7,17 @@ namespace Squazz.HotCiv.Strategies
         public Player? GetWinner(int age, Dictionary<Position, ICity> cities )
         {
             Player? owner = null;
-            cities.Values.All(city => { if (owner == null) { owner = city.Owner; } return city.Owner == owner; });
+            foreach (var city in cities)
+            {
+                if (owner == null)
+                {
+                    owner = city.Value.Owner;
+                }
+                if (city.Value.Owner != owner)
+                {
+                    return null;
+                }
+            }
             return owner;
         }
     }

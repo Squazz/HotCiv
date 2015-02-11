@@ -65,12 +65,13 @@ namespace Squazz.HotCiv.Core.Tests
         [TestMethod]
         public void RedShouldWinAfterCapturingBluesCity()
         {
+            Assert.IsNull(_game.GetWinner(), "We shouldn't have a winner now");
             _game.MoveUnit(new Position(2, 0), new Position(3, 1));
             _game.MoveUnit(new Position(3, 1), new Position(4, 1));
             Assert.AreEqual(Player.RED, _game.GetUnitAt(new Position(4, 1)).Owner);
             Assert.AreEqual(Player.RED, _game.GetCityAt(new Position(4, 1)).Owner);
             EndRounds();
-            Assert.AreEqual(Player.RED, _game.GetWinner());
+            Assert.AreEqual(Player.RED, _game.GetWinner(), "RED should now be our winner");
         }
 
         // Shortcode for ending 2 turns
