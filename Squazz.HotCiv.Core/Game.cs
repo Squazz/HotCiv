@@ -108,7 +108,7 @@ namespace Squazz.HotCiv
                     CreateUnits();
 
                     // Then add production
-                    foreach (var city in _cities) { city.Value.Vault = city.Value.Vault + 6; }
+                    foreach (var city in _cities) { city.Value.Vault += 6; }
                     
                     // Lastly advance age and change PlayerInTurn
                     Age = _ageStrategy.CalculateNewAge(Age);
@@ -152,7 +152,7 @@ namespace Squazz.HotCiv
                 Position position = EnsureProperUnitPlacement(city.Value.Position);
 
                 _units.Add(position, new Unit(city.Value.Owner, city.Value.Production));
-                city.Value.Vault = city.Value.Vault - 10;
+                city.Value.Vault -= 10;
                 city.Value.Production = null;
             }
         }

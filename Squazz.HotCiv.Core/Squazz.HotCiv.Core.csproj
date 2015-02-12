@@ -52,6 +52,9 @@
     <Compile Include="Strategies\WorldLayoutStrategyAlphaWorld.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Strategies\WorldLayoutStrategyDeltaWorld.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Tile.cs" />
     <Compile Include="Unit.cs" />
   </ItemGroup>
