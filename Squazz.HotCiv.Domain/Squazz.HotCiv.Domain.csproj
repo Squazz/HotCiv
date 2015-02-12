@@ -48,6 +48,9 @@
     <Compile Include="Strategies\IActionStrategy.cs" />
     <Compile Include="Strategies\IAgeStrategy.cs" />
     <Compile Include="Strategies\IWinningStrategy.cs" />
+    <Compile Include="Strategies\IWorldLayoutStrategy.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
