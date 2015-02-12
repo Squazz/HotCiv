@@ -49,6 +49,9 @@
     <Compile Include="Strategies\AgeStrategyLinear.cs" />
     <Compile Include="Strategies\WinningStrategyCitiesConquered.cs" />
     <Compile Include="Strategies\WinningStrategyRedWins.cs" />
+    <Compile Include="Strategies\WorldLayoutStrategyAlphaWorld.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Tile.cs" />
     <Compile Include="Unit.cs" />
   </ItemGroup>

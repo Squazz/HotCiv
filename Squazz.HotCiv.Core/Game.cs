@@ -14,34 +14,26 @@ namespace Squazz.HotCiv
         private readonly IAgeStrategy _ageStrategy;
         private readonly IWinningStrategy _winningStrategy;
         private readonly IActionStrategy _actionStrategy;
+        private readonly IWorldLayoutStrategy _worldLayoutStrategy;
 
-        private readonly Dictionary<Position, ICity> _cities = new Dictionary<Position, ICity>();
-        private readonly Dictionary<Position, IUnit> _units = new Dictionary<Position, IUnit>();
-        private readonly Dictionary<Position, ITile> _tiles = new Dictionary<Position, ITile>();
+        private readonly Dictionary<Position, ICity> _cities;
+        private readonly Dictionary<Position, IUnit> _units;
+        private readonly Dictionary<Position, ITile> _tiles;
         private readonly Dictionary<Position, IUnit> _fortifiedArchers = new Dictionary<Position, IUnit>();
         
-        public Game(IAgeStrategy ageStrategy, IWinningStrategy winningStrategy, IActionStrategy actionStrategy = null)
+        public Game(IAgeStrategy ageStrategy, IWinningStrategy winningStrategy, IWorldLayoutStrategy worldLayoutStrategy, IActionStrategy actionStrategy = null)
         {
-            _ageStrategy = ageStrategy;
-            _winningStrategy = winningStrategy;
-            _actionStrategy = actionStrategy;
+            _worldLayoutStrategy    = worldLayoutStrategy;
+            _ageStrategy            = ageStrategy;
+            _winningStrategy        = winningStrategy;
+            _actionStrategy         = actionStrategy;
+
+            _cities     = _worldLayoutStrategy.CreateCities();
+            _units      = _worldLayoutStrategy.CreateUnits();
+            _tiles      = _worldLayoutStrategy.CreateTiles();
 
             PlayerInTurn = Player.RED;
             Age = -4000;
-
-            // Add Standard Cities
-            _cities.Add(new Position(1, 1), new City(Player.RED, new Position(1, 1)));
-            _cities.Add(new Position(4, 1), new City(Player.BLUE, new Position(4, 1)));
-
-            // Add standard units
-            _units.Add(new Position(2, 0), new Unit(Player.RED, GameConstants.Archer));
-            _units.Add(new Position(3, 2), new Unit(Player.BLUE, GameConstants.Legion));
-            _units.Add(new Position(4, 3), new Unit(Player.RED, GameConstants.Settler));
-
-            // Decorate the board with tiles
-            _tiles.Add(new Position(1, 0), new Tile(GameConstants.Ocean));
-            _tiles.Add(new Position(0, 1), new Tile(GameConstants.Hills));
-            _tiles.Add(new Position(2, 2), new Tile(GameConstants.Mountains));
 
             _redCity = GetCityAt(new Position(1, 1));
             _blueCity = GetCityAt(new Position(4, 1));
