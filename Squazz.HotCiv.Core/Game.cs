@@ -9,8 +9,6 @@ namespace Squazz.HotCiv
         public Player PlayerInTurn { get; private set; }
         public int Age { get; private set; }
 
-        private readonly ICity _redCity;
-        private readonly ICity _blueCity;
         private readonly IAgeStrategy _ageStrategy;
         private readonly IWinningStrategy _winningStrategy;
         private readonly IActionStrategy _actionStrategy;
@@ -34,9 +32,6 @@ namespace Squazz.HotCiv
 
             PlayerInTurn = Player.RED;
             Age = -4000;
-
-            _redCity = GetCityAt(new Position(1, 1));
-            _blueCity = GetCityAt(new Position(4, 1));
         }
 
         public ITile GetTileAt(Position position)
@@ -113,8 +108,7 @@ namespace Squazz.HotCiv
                     CreateUnits();
 
                     // Then add production
-                    _redCity.Vault = _redCity.Vault + 6;
-                    _blueCity.Vault = _blueCity.Vault + 6;
+                    foreach (var city in _cities) { city.Value.Vault = city.Value.Vault + 6; }
                     
                     // Lastly advance age and change PlayerInTurn
                     Age = _ageStrategy.CalculateNewAge(Age);
@@ -135,41 +129,31 @@ namespace Squazz.HotCiv
 
         public void PerformUnitActionAt(Position position)
         {
-            if(_actionStrategy.PerformAction(position, this))
+            if (!_actionStrategy.PerformAction(position, this)) return;
+            if (GetUnitAt(position).Type == GameConstants.Archer)
             {
-                if (GetUnitAt(position).Type == GameConstants.Archer)
-                {
-                    if (_fortifiedArchers.ContainsKey(position))
-                        _fortifiedArchers.Remove(position);
-                    else
-                        _fortifiedArchers.Add(position, GetUnitAt(position));
-                }
-                if (GetUnitAt(position).Type == GameConstants.Settler)
-                {
-                    _cities.Add(position, new City(GetUnitAt(position).Owner,position));
-                    _units.Remove(position);
-                }
+                if (_fortifiedArchers.ContainsKey(position))
+                    _fortifiedArchers.Remove(position);
+                else
+                    _fortifiedArchers.Add(position, GetUnitAt(position));
+            }
+            if (GetUnitAt(position).Type == GameConstants.Settler)
+            {
+                _cities.Add(position, new City(GetUnitAt(position).Owner,position));
+                _units.Remove(position);
             }
         }
 
         private void CreateUnits()
         {
-            if (WeCanProduce(_redCity))
+            foreach (var city in _cities)
             {
-                Position position = EnsureProperUnitPlacement(_redCity.Position);
+                if (!WeCanProduce(city.Value)) continue;
+                Position position = EnsureProperUnitPlacement(city.Value.Position);
 
-                _units.Add(position, new Unit(_redCity.Owner, _redCity.Production));
-                _redCity.Vault = _redCity.Vault - 10;
-                _redCity.Production = null;
-            }
-
-            if (WeCanProduce(_blueCity))
-            {
-                Position position = EnsureProperUnitPlacement(_blueCity.Position);
-
-                _units.Add(position, new Unit(_blueCity.Owner, _blueCity.Production));
-                _blueCity.Vault = _blueCity.Vault - 10;
-                _blueCity.Production = null;
+                _units.Add(position, new Unit(city.Value.Owner, city.Value.Production));
+                city.Value.Vault = city.Value.Vault - 10;
+                city.Value.Production = null;
             }
         }
 
