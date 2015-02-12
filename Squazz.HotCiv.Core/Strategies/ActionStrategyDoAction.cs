@@ -11,7 +11,7 @@
                     if (unit.Defense == 6)
                         unit.Defense = 3;
                     else
-                        unit.Defense = unit.Defense * 2;
+                        unit.Defense *= 2;
                         unit.Moves = 0;
                     return true;
                 case GameConstants.Settler:

@@ -8,7 +8,7 @@ namespace Squazz.HotCiv.Strategies
         {
             Dictionary<Position, ITile> tiles = new Dictionary<Position, ITile>
             {
-                // Add Standard Cities
+                // Add Tiles
                 {new Position(1, 0), new Tile(GameConstants.Ocean)},
                 {new Position(0, 1), new Tile(GameConstants.Hills)},
                 {new Position(2, 2), new Tile(GameConstants.Mountains)}
