@@ -73,11 +73,15 @@ namespace Squazz.HotCiv
             if (!ValidPlaceForUnit(to))
                 return false;
 
+            IUnit unit = GetUnitAt(from);
+            if (Math.Abs(to.Column - from.Column) > unit.Moves || Math.Abs(to.Row - from.Row) > unit.Moves)
+                return false;
+
             IUnit otherUnit = GetUnitAt(to);
             ICity targetCity = GetCityAt(to);
             if (otherUnit != null)
             {
-                if (Equals(otherUnit.Owner, GetUnitAt(from).Owner))
+                if (Equals(otherUnit.Owner, unit.Owner))
                 {
                     // We cannot have two units at the same tile
                     return false;
@@ -88,15 +92,16 @@ namespace Squazz.HotCiv
 
             if (targetCity != null)
             {
-                if (!Equals(targetCity.Owner, GetUnitAt(from).Owner))
+                if (!Equals(targetCity.Owner, unit.Owner))
                 {
+                    // If target city is an enemt, capture it
                     _cities.Remove(to);
                     _cities.Add(to, new City(Player.RED, to));
                 }
             }
-            IUnit unit = GetUnitAt(from);
             _units.Remove(from);
             _units.Add(to, unit);
+            unit.Moves = 0;
             return true;
         }
 
@@ -118,6 +123,9 @@ namespace Squazz.HotCiv
                     // Lastly advance age and change PlayerInTurn
                     Age = _ageStrategy.CalculateNewAge(Age);
                     PlayerInTurn = Player.RED;
+
+                    // Replenish the units movements
+                    foreach (var unit in _units) { unit.Value.Moves = 1; }
                     break;
             }
         }

@@ -600,6 +600,22 @@ namespace Squazz.HotCiv.Core.Tests
             
         }
 
+        [TestMethod]
+        public void UnitsShouldOnlyBeAbleToMove1StepEachRound()
+        {
+            Assert.IsFalse(_game.MoveUnit(new Position(2, 0), new Position(4, 0)));
+            Assert.IsTrue(_game.MoveUnit(new Position(2, 0), new Position(3, 0)));
+            Assert.IsFalse(_game.MoveUnit(new Position(3, 0), new Position(4, 0)));
+            EndRounds();
+            Assert.IsTrue(_game.MoveUnit(new Position(3, 0), new Position(4, 0)));
+            EndRounds();
+            Assert.IsFalse(_game.MoveUnit(new Position(4, 0), new Position(2, 0)));
+            Assert.IsTrue(_game.MoveUnit(new Position(4, 0), new Position(3, 0)));
+            Assert.IsFalse(_game.MoveUnit(new Position(3, 0), new Position(2, 0)));
+            EndRounds();
+            Assert.IsTrue(_game.MoveUnit(new Position(3, 0), new Position(2, 0)));
+        }
+
         // Shortcode for ending 2 turns
         private void EndRounds(int rounds = 1)
         {
