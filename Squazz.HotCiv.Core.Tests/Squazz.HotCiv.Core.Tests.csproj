@@ -54,6 +54,7 @@
     <Compile Include="AgingLinearTests.cs" />
     <Compile Include="AlphaCivTests.cs" />
     <Compile Include="BetaCivTests.cs" />
+    <Compile Include="GammaCivTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

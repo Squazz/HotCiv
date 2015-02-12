@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Squazz.HotCiv.Strategies;
 
 namespace Squazz.HotCiv
@@ -12,15 +13,18 @@ namespace Squazz.HotCiv
         private readonly ICity _blueCity;
         private readonly IAgeStrategy _ageStrategy;
         private readonly IWinningStrategy _winningStrategy;
+        private readonly IActionStrategy _actionStrategy;
 
         private readonly Dictionary<Position, ICity> _cities = new Dictionary<Position, ICity>();
         private readonly Dictionary<Position, IUnit> _units = new Dictionary<Position, IUnit>();
         private readonly Dictionary<Position, ITile> _tiles = new Dictionary<Position, ITile>();
+        private readonly Dictionary<Position, IUnit> _fortifiedArchers = new Dictionary<Position, IUnit>();
         
-        public Game(IAgeStrategy ageStrategy, IWinningStrategy winningStrategy)
+        public Game(IAgeStrategy ageStrategy, IWinningStrategy winningStrategy, IActionStrategy actionStrategy = null)
         {
             _ageStrategy = ageStrategy;
             _winningStrategy = winningStrategy;
+            _actionStrategy = actionStrategy;
 
             PlayerInTurn = Player.RED;
             Age = -4000;
@@ -125,7 +129,7 @@ namespace Squazz.HotCiv
                     PlayerInTurn = Player.RED;
 
                     // Replenish the units movements
-                    foreach (var unit in _units) { unit.Value.Moves = 1; }
+                    foreach (var unit in _units.Where(unit => !_fortifiedArchers.ContainsKey(unit.Key))) { unit.Value.Moves = 1; }
                     break;
             }
         }
@@ -137,7 +141,24 @@ namespace Squazz.HotCiv
             GetCityAt(position).Production = unitType;
         }
 
-        public void PerformUnitActionAt( Position position ) {}
+        public void PerformUnitActionAt(Position position)
+        {
+            if(_actionStrategy.PerformAction(position, this))
+            {
+                if (GetUnitAt(position).Type == GameConstants.Archer)
+                {
+                    if (_fortifiedArchers.ContainsKey(position))
+                        _fortifiedArchers.Remove(position);
+                    else
+                        _fortifiedArchers.Add(position, GetUnitAt(position));
+                }
+                if (GetUnitAt(position).Type == GameConstants.Settler)
+                {
+                    _cities.Add(position, new City(GetUnitAt(position).Owner,position));
+                    _units.Remove(position);
+                }
+            }
+        }
 
         private void CreateUnits()
         {

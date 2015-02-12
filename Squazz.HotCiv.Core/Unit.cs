@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Policy;
 
 namespace Squazz.HotCiv
 {
@@ -7,7 +8,7 @@ namespace Squazz.HotCiv
         public Player Owner { get; private set; }
         public String Type { get; private set; }
         public int Attack { get; private set; }
-        public int Defense { get; private set; }
+        public int Defense { get; set; }
         public int Moves { get; set; }
 
         public Unit(Player owner, String type)

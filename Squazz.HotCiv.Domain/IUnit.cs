@@ -29,7 +29,7 @@ namespace Squazz.HotCiv
         /** return the defensive strength of this unit
          * @return defensive strength
          */
-        int Defense { get; }
+        int Defense { get; set; }
 
         /** return the attack strength of this unit
          * @return attack strength
