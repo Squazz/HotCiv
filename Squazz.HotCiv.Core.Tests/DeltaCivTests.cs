@@ -60,9 +60,40 @@ namespace Squazz.HotCiv.Core.Tests
         }
 
         [TestMethod]
-        public void testMe()
+        public void WeShouldHaveOceanAtTheRightPlaces()
         {
-            
+            Assert.AreEqual(GameConstants.Ocean, _game.GetTileAt(new Position(0, 0)).Type);
+            Assert.AreEqual(GameConstants.Ocean, _game.GetTileAt(new Position(0, 11)).Type);
+            Assert.AreEqual(GameConstants.Ocean, _game.GetTileAt(new Position(11, 13)).Type);
+            Assert.AreEqual(GameConstants.Ocean, _game.GetTileAt(new Position(15, 4)).Type);
+        }
+
+        [TestMethod]
+        public void WeShouldHaveMountainsAtTheRightPlaces()
+        {
+            Assert.AreEqual(GameConstants.Mountains, _game.GetTileAt(new Position(0, 5)).Type);
+            Assert.AreEqual(GameConstants.Mountains, _game.GetTileAt(new Position(2, 6)).Type);
+            Assert.AreEqual(GameConstants.Mountains, _game.GetTileAt(new Position(7, 13)).Type);
+            Assert.AreEqual(GameConstants.Mountains, _game.GetTileAt(new Position(11, 4)).Type);
+        }
+
+        [TestMethod]
+        public void WeShouldHaveHillsAtTheRightPlaces()
+        {
+            Assert.AreEqual(GameConstants.Hills, _game.GetTileAt(new Position(1, 3)).Type);
+            Assert.AreEqual(GameConstants.Hills, _game.GetTileAt(new Position(1, 4)).Type);
+            Assert.AreEqual(GameConstants.Hills, _game.GetTileAt(new Position(4, 8)).Type);
+            Assert.AreEqual(GameConstants.Hills, _game.GetTileAt(new Position(5, 12)).Type);
+        }
+
+        [TestMethod]
+        public void WeShouldHaveForrestsAtTheRightPlaces()
+        {
+            Assert.AreEqual(GameConstants.Forest, _game.GetTileAt(new Position(1, 9)).Type);
+            Assert.AreEqual(GameConstants.Forest, _game.GetTileAt(new Position(5, 2)).Type);
+            Assert.AreEqual(GameConstants.Forest, _game.GetTileAt(new Position(9, 2)).Type);
+            Assert.AreEqual(GameConstants.Forest, _game.GetTileAt(new Position(9, 11)).Type);
+            Assert.AreEqual(GameConstants.Forest, _game.GetTileAt(new Position(12, 9)).Type);
         }
 
         // Shortcode for ending 2 turns
