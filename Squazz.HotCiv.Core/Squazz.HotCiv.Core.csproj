@@ -47,6 +47,7 @@
     </Compile>
     <Compile Include="Strategies\AgeStrategyAdvanced.cs" />
     <Compile Include="Strategies\AgeStrategyLinear.cs" />
+    <Compile Include="Strategies\WinningStrategy3Wins.cs" />
     <Compile Include="Strategies\WinningStrategyCitiesConquered.cs" />
     <Compile Include="Strategies\WinningStrategyRedWins.cs" />
     <Compile Include="Strategies\WorldLayoutStrategyAlphaWorld.cs">
