@@ -12,7 +12,7 @@ namespace Squazz.HotCiv.Core.Tests
         [TestInitialize]
         public void Initialize()
         {
-            _game = new Game(new AgeStrategyLinear(), new WinningStrategyRedWins(), new WorldLayoutStrategyDeltaWorld());
+            _game = new Game(new AgeStrategyLinear(), new WinningStrategyRedWins(), new WorldLayoutStrategyDeltaWorld(), new AttackStrategyAttackerWins());
         }
 
         [TestMethod]
