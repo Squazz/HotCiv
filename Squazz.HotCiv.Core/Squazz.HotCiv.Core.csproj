@@ -47,6 +47,9 @@
     </Compile>
     <Compile Include="Strategies\AgeStrategyAdvanced.cs" />
     <Compile Include="Strategies\AgeStrategyLinear.cs" />
+    <Compile Include="Strategies\AttackStrategyAdvancedAttack.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Strategies\AttackStrategyAttackerWins.cs">
       <SubType>Code</SubType>
     </Compile>

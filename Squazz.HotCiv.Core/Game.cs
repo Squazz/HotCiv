@@ -12,7 +12,6 @@ namespace Squazz.HotCiv
         private readonly IAgeStrategy _ageStrategy;
         private readonly IWinningStrategy _winningStrategy;
         private readonly IActionStrategy _actionStrategy;
-        private readonly IWorldLayoutStrategy _worldLayoutStrategy;
         private readonly IAttackStrategy _attackStrategy;
 
         private readonly Dictionary<Position, ICity> _cities;
@@ -22,15 +21,15 @@ namespace Squazz.HotCiv
         
         public Game(IAgeStrategy ageStrategy, IWinningStrategy winningStrategy, IWorldLayoutStrategy worldLayoutStrategy, IAttackStrategy attackStrategy, IActionStrategy actionStrategy = null)
         {
-            _worldLayoutStrategy    = worldLayoutStrategy;
+            var layoutStrategy = worldLayoutStrategy;
             _attackStrategy         = attackStrategy;
             _ageStrategy            = ageStrategy;
             _winningStrategy        = winningStrategy;
             _actionStrategy         = actionStrategy;
 
-            _cities     = _worldLayoutStrategy.CreateCities();
-            _units      = _worldLayoutStrategy.CreateUnits();
-            _tiles      = _worldLayoutStrategy.CreateTiles();
+            _cities     = layoutStrategy.CreateCities();
+            _units      = layoutStrategy.CreateUnits();
+            _tiles      = layoutStrategy.CreateTiles();
 
             // RED starts the game
             PlayerInTurn = Player.RED;
@@ -67,12 +66,12 @@ namespace Squazz.HotCiv
             if (!ValidPlaceForUnit(to))
                 return false;
 
-            IUnit unit = GetUnitAt(from);
+            var unit = GetUnitAt(from);
             if (Math.Abs(to.Column - from.Column) > unit.Moves || Math.Abs(to.Row - from.Row) > unit.Moves)
                 return false;
 
-            IUnit otherUnit = GetUnitAt(to);
-            ICity targetCity = GetCityAt(to);
+            var otherUnit = GetUnitAt(to);
+            var targetCity = GetCityAt(to);
             if (otherUnit != null)
             {
                 if (Equals(otherUnit.Owner, unit.Owner))
@@ -81,7 +80,18 @@ namespace Squazz.HotCiv
                     return false;
                 }
                 // If the other unit is an enemy, attack it
-                _attackStrategy.Attack(from, to, _cities, _units);
+                var winner = _attackStrategy.Attack(from, to, _cities, _units);
+                if (winner.Owner == unit.Owner)
+                {
+                    _units.Remove(from);
+                    _units.Add(to, unit);
+                    unit.Moves = 0;
+                }
+                else
+                {
+                    _units.Remove(from);
+                }
+                return true;
             }
 
             if (targetCity != null)
@@ -148,6 +158,26 @@ namespace Squazz.HotCiv
             }
         }
 
+        public int GetActualUnitAttack(Position unitPosition)
+        {
+            var unit = GetUnitAt(unitPosition);
+            var attack = unit.Attack;
+
+            if (GetCityAt(unitPosition) != null)
+                attack *= 3;
+                
+            return attack;
+        }
+        public int GetActualUnitDefence(Position unitPosition)
+        {
+            var unit = GetUnitAt(unitPosition);
+            var defence = unit.Defense;
+            if (GetCityAt(unitPosition) != null)
+                defence *= 3;
+
+            return defence;
+        }
+
         private void CreateUnits()
         {
             foreach (var city in _cities)
@@ -161,7 +191,7 @@ namespace Squazz.HotCiv
             }
         }
 
-        private bool WeCanProduce(ICity city)
+        private static bool WeCanProduce(ICity city)
         {
             int wealth = city.Vault;
             String production = city.Production;
