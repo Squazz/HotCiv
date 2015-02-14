@@ -45,6 +45,7 @@
     <Compile Include="Position.cs" />
     <Compile Include="ITile.cs" />
     <Compile Include="IUnit.cs" />
+    <Compile Include="Strategies\IAttackStrategy.cs" />
     <Compile Include="Strategies\IActionStrategy.cs" />
     <Compile Include="Strategies\IAgeStrategy.cs" />
     <Compile Include="Strategies\IWinningStrategy.cs" />

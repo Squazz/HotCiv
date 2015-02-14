@@ -13,15 +13,17 @@ namespace Squazz.HotCiv
         private readonly IWinningStrategy _winningStrategy;
         private readonly IActionStrategy _actionStrategy;
         private readonly IWorldLayoutStrategy _worldLayoutStrategy;
+        private readonly IAttackStrategy _attackStrategy;
 
         private readonly Dictionary<Position, ICity> _cities;
         private readonly Dictionary<Position, IUnit> _units;
         private readonly Dictionary<Position, ITile> _tiles;
         private readonly Dictionary<Position, IUnit> _fortifiedArchers = new Dictionary<Position, IUnit>();
         
-        public Game(IAgeStrategy ageStrategy, IWinningStrategy winningStrategy, IWorldLayoutStrategy worldLayoutStrategy, IActionStrategy actionStrategy = null)
+        public Game(IAgeStrategy ageStrategy, IWinningStrategy winningStrategy, IWorldLayoutStrategy worldLayoutStrategy, IAttackStrategy attackStrategy, IActionStrategy actionStrategy = null)
         {
             _worldLayoutStrategy    = worldLayoutStrategy;
+            _attackStrategy         = attackStrategy;
             _ageStrategy            = ageStrategy;
             _winningStrategy        = winningStrategy;
             _actionStrategy         = actionStrategy;
@@ -30,6 +32,7 @@ namespace Squazz.HotCiv
             _units      = _worldLayoutStrategy.CreateUnits();
             _tiles      = _worldLayoutStrategy.CreateTiles();
 
+            // RED starts the game
             PlayerInTurn = Player.RED;
             Age = -4000;
         }
@@ -77,8 +80,8 @@ namespace Squazz.HotCiv
                     // We cannot have two units at the same tile
                     return false;
                 }
-                // If the other unit is an enemy, attack and destroy it
-                _units.Remove(to);
+                // If the other unit is an enemy, attack it
+                _attackStrategy.Attack(from, to, _cities, _units);
             }
 
             if (targetCity != null)
@@ -90,6 +93,7 @@ namespace Squazz.HotCiv
                     _cities.Add(to, new City(Player.RED, to));
                 }
             }
+
             _units.Remove(from);
             _units.Add(to, unit);
             unit.Moves = 0;
