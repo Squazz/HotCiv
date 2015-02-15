@@ -165,6 +165,10 @@ namespace Squazz.HotCiv
 
             if (GetCityAt(unitPosition) != null)
                 attack *= 3;
+
+            if (GetTileAt(unitPosition).Type == GameConstants.Hills ||
+                GetTileAt(unitPosition).Type == GameConstants.Forest)
+                attack *= 2;
                 
             return attack;
         }
@@ -172,8 +176,13 @@ namespace Squazz.HotCiv
         {
             var unit = GetUnitAt(unitPosition);
             var defence = unit.Defense;
+
             if (GetCityAt(unitPosition) != null)
                 defence *= 3;
+
+            if (GetTileAt(unitPosition).Type == GameConstants.Hills ||
+                GetTileAt(unitPosition).Type == GameConstants.Forest)
+                defence *= 2;
 
             return defence;
         }
