@@ -144,17 +144,18 @@ namespace Squazz.HotCiv
         public void PerformUnitActionAt(Position position)
         {
             if (!_actionStrategy.PerformAction(position, this)) return;
-            if (GetUnitAt(position).Type == GameConstants.Archer)
+            switch (GetUnitAt(position).Type)
             {
-                if (_fortifiedArchers.ContainsKey(position))
-                    _fortifiedArchers.Remove(position);
-                else
-                    _fortifiedArchers.Add(position, GetUnitAt(position));
-            }
-            if (GetUnitAt(position).Type == GameConstants.Settler)
-            {
-                _cities.Add(position, new City(GetUnitAt(position).Owner,position));
-                _units.Remove(position);
+                case GameConstants.Archer:
+                    if (_fortifiedArchers.ContainsKey(position))
+                        _fortifiedArchers.Remove(position);
+                    else
+                        _fortifiedArchers.Add(position, GetUnitAt(position));
+                    break;
+                case GameConstants.Settler:
+                    _cities.Add(position, new City(GetUnitAt(position).Owner,position));
+                    _units.Remove(position);
+                    break;
             }
         }
 
@@ -192,7 +193,7 @@ namespace Squazz.HotCiv
             foreach (var city in _cities)
             {
                 if (!WeCanProduce(city.Value)) continue;
-                Position position = EnsureProperUnitPlacement(city.Value.Position);
+                var position = EnsureProperUnitPlacement(city.Value.Position);
 
                 _units.Add(position, new Unit(city.Value.Owner, city.Value.Production));
                 city.Value.Vault -= 10;
@@ -202,12 +203,12 @@ namespace Squazz.HotCiv
 
         private static bool WeCanProduce(ICity city)
         {
-            int wealth = city.Vault;
-            String production = city.Production;
+            var wealth = city.Vault;
+            var production = city.Production;
 
             if (production == null) return false;
 
-            int unitPrice = 10; // Assume we are producing an archer
+            var unitPrice = 10; // Assume we are producing an archer
             if (production == GameConstants.Legion) unitPrice = 15;
             if (production == GameConstants.Settler) unitPrice = 30;
 
