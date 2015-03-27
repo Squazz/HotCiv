@@ -14,7 +14,7 @@ namespace Squazz.HotCiv.Core.Tests
         }
 
         [TestMethod]
-        public void ShouldStatInAge4000BC()
+        public void ShouldStatInAge4000Bc()
         {
             Assert.AreEqual(-4000, _game.Age, "Age should be -4000");
         }
@@ -218,7 +218,7 @@ namespace Squazz.HotCiv.Core.Tests
         }
 
         [TestMethod]
-        public void ShouldNotHaveAWinnerBefore3000BC()
+        public void ShouldNotHaveAWinnerBefore3000Bc()
         {
             Assert.IsNull(_game.GetWinner(), "We shouldn't have a winner in 4000BC");
             EndRounds(9);
@@ -226,7 +226,7 @@ namespace Squazz.HotCiv.Core.Tests
         }
 
         [TestMethod]
-        public void RedShouldWinInYear3000BC()
+        public void RedShouldWinInYear3000Bc()
         {
             EndRounds(10);
             Assert.IsNotNull(_game.GetWinner(), "We should have a winner in 3000BC");
@@ -381,10 +381,10 @@ namespace Squazz.HotCiv.Core.Tests
         [TestMethod]
         public void CitiesProduces6ProductionEachRound()
         {
-            Position redCityPosition = new Position(1, 1);
-            ICity redCity = _game.GetCityAt(redCityPosition);
-            Position blueCityPosition = new Position(4, 1);
-            ICity blueCity = _game.GetCityAt(blueCityPosition);
+            var redCityPosition = new Position(1, 1);
+            var redCity = _game.GetCityAt(redCityPosition);
+            var blueCityPosition = new Position(4, 1);
+            var blueCity = _game.GetCityAt(blueCityPosition);
             Assert.AreEqual(0, redCity.Vault, "REDs city should start with 0 production accumulated");
             Assert.AreEqual(0, blueCity.Vault, "BLUEs city should start with 0 production accumulated");
             EndRounds();
@@ -411,8 +411,8 @@ namespace Squazz.HotCiv.Core.Tests
         [TestMethod]
         public void RedShouldBeAbleToProduceAnArcher()
         {
-            Position redCityPosition = new Position(1, 1);
-            ICity redCity = _game.GetCityAt(redCityPosition);
+            var redCityPosition = new Position(1, 1);
+            var redCity = _game.GetCityAt(redCityPosition);
             EndRounds(2);
             Assert.AreEqual(12, redCity.Vault, "Our city should have enough production to create a unit");
             _game.ChangeProductionInCityAt(redCityPosition, GameConstants.Archer);
