@@ -165,11 +165,11 @@ namespace Squazz.HotCiv
             var attack = unit.Attack;
 
             if (GetCityAt(unitPosition) != null)
-                attack *= 3;
+                attack *= 3; // Multiply by 3 if the unit is in a city
 
-            if (GetTileAt(unitPosition).Type == GameConstants.Hills ||
-                GetTileAt(unitPosition).Type == GameConstants.Forest)
-                attack *= 2;
+            if (GetTileAt(unitPosition).Type == GameConstants.Hills 
+                || GetTileAt(unitPosition).Type == GameConstants.Forest)
+                attack *= 2; // If the unit is at a hill or in a forrest, double the attack
                 
             return attack;
         }
@@ -179,11 +179,11 @@ namespace Squazz.HotCiv
             var defence = unit.Defense;
 
             if (GetCityAt(unitPosition) != null)
-                defence *= 3;
+                defence *= 3; // Multiply by 3 if the unit is in a city
 
-            if (GetTileAt(unitPosition).Type == GameConstants.Hills ||
-                GetTileAt(unitPosition).Type == GameConstants.Forest)
-                defence *= 2;
+            if (GetTileAt(unitPosition).Type == GameConstants.Hills 
+                || GetTileAt(unitPosition).Type == GameConstants.Forest)
+                defence *= 2; // If the unit is at a hill or in a forrest, double the defence
 
             return defence;
         }

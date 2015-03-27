@@ -10,7 +10,7 @@ namespace Squazz.HotCiv.Core.Tests
         public void Parameter4000BCShouldResultIn3900BC()
         {
             IAgeStrategy ageStrategy = new AgeStrategyLinear();
-            Assert.AreEqual(-3900 ,ageStrategy.CalculateNewAge(-4000), "Calculated age should be -3900");
+            Assert.AreEqual(-3900, ageStrategy.CalculateNewAge(-4000), "Calculated age should be -3900");
         }
 
         [TestMethod]
