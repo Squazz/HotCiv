@@ -59,5 +59,23 @@ namespace Squazz.HotCiv.Core.Tests
             Assert.AreEqual(12, _game.GetActualUnitAttack(redCity), "Attack should now be 9"); // (2+1+1)*3
             Assert.AreEqual(15, _game.GetActualUnitDefence(redCity), "Defence should now be 12"); // (3+1+1)*3
         }
+
+        [TestMethod]
+        public void AttackingUnbuffedShouldResultInLoose()
+        {
+            Assert.IsTrue(1 == 2);
+        }
+
+        [TestMethod]
+        public void AttackingBuffedShouldResultInWin()
+        {
+            Assert.IsTrue(1 == 2);
+        }
+
+        [TestMethod]
+        public void ThreeWinsShouldResultInWinningTheGame()
+        {
+            Assert.IsTrue(1 == 2);
+        }
     }
 }
