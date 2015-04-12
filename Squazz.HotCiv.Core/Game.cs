@@ -162,7 +162,7 @@ namespace Squazz.HotCiv
         public int GetActualUnitAttack(Position unitPosition)
         {
             var unit = GetUnitAt(unitPosition);
-            var attack = unit.Attack;
+            var attack = unit.Attack + GetAmountOfNearbyUnits(unitPosition);
 
             if (GetCityAt(unitPosition) != null)
                 attack *= 3; // Multiply by 3 if the unit is in a city
@@ -170,13 +170,13 @@ namespace Squazz.HotCiv
             if (GetTileAt(unitPosition).Type == GameConstants.Hills 
                 || GetTileAt(unitPosition).Type == GameConstants.Forest)
                 attack *= 2; // If the unit is at a hill or in a forrest, double the attack
-                
+            
             return attack;
         }
         public int GetActualUnitDefence(Position unitPosition)
         {
             var unit = GetUnitAt(unitPosition);
-            var defence = unit.Defense;
+            var defence = unit.Defense + GetAmountOfNearbyUnits(unitPosition);
 
             if (GetCityAt(unitPosition) != null)
                 defence *= 3; // Multiply by 3 if the unit is in a city
@@ -235,6 +235,30 @@ namespace Squazz.HotCiv
                 position = new Position(position.Row - 1, position.Column);
 
             return position;
+        }
+
+        private int GetAmountOfNearbyUnits(Position unitPosition)
+        {
+            var amount = 0;
+
+            if (_units.ContainsKey(new Position(unitPosition.Row - 1, unitPosition.Column - 1)))
+                amount++;
+            if (_units.ContainsKey(new Position(unitPosition.Row - 1, unitPosition.Column)))
+                amount++;
+            if (_units.ContainsKey(new Position(unitPosition.Row - 1, unitPosition.Column + 1)))
+                amount++;
+            if (_units.ContainsKey(new Position(unitPosition.Row, unitPosition.Column - 1)))
+                amount++;
+            if (_units.ContainsKey(new Position(unitPosition.Row, unitPosition.Column + 1)))
+                amount++;
+            if (_units.ContainsKey(new Position(unitPosition.Row + 1, unitPosition.Column - 1)))
+                amount++;
+            if (_units.ContainsKey(new Position(unitPosition.Row + 1, unitPosition.Column)))
+                amount++;
+            if (_units.ContainsKey(new Position(unitPosition.Row + 1, unitPosition.Column + 1)))
+                amount++;
+
+            return amount;
         }
 
         private bool ValidPlaceForUnit(Position position)
