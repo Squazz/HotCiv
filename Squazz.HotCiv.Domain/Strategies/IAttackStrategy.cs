@@ -4,6 +4,15 @@ namespace Squazz.HotCiv.Strategies
 {
     public interface IAttackStrategy
     {
-        IUnit Attack(Position attacker, Position defence, Dictionary<Position, ICity> cities, Dictionary<Position, IUnit> units, Dictionary<Position, ITile> tiles = null, Dictionary<Position, IUnit> fortifiedArchers = null);
+        IUnit Attack(
+            Position attacker, 
+            Position defence,
+            Dictionary<Position, IUnit> units,
+            Dictionary<Position, ICity> cities = null, 
+            int attackerAttack = 0, 
+            int defenderDefence = 0,
+            Dictionary<Position, ITile> tiles = null, 
+            Dictionary<Position, IUnit> fortifiedArchers = null
+        );
     }
 }

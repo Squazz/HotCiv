@@ -61,6 +61,9 @@ namespace Squazz.HotCiv
         
         public bool MoveUnit( Position from, Position to )
         {
+            if (from == null) throw new ArgumentNullException("from");
+            if (to == null) throw new ArgumentNullException("to");
+
             if (GetUnitAt(from) == null) return false;
             if (!Equals(GetUnitAt(from).Owner, PlayerInTurn)) return false;
             if (!ValidPlaceForUnit(to))
@@ -80,10 +83,11 @@ namespace Squazz.HotCiv
                     return false;
                 }
                 // If the other unit is an enemy, attack it
-                var winner = _attackStrategy.Attack(from, to, _cities, _units);
+                var winner = _attackStrategy.Attack(from, to, _units, _cities, GetActualUnitAttack(from), GetActualUnitDefence(to));
                 if (winner.Owner == unit.Owner)
                 {
                     _units.Remove(from);
+                    _units.Remove(to);
                     _units.Add(to, unit);
                     unit.Moves = 0;
                 }
@@ -173,6 +177,7 @@ namespace Squazz.HotCiv
             
             return attack;
         }
+
         public int GetActualUnitDefence(Position unitPosition)
         {
             var unit = GetUnitAt(unitPosition);
@@ -239,23 +244,33 @@ namespace Squazz.HotCiv
 
         private int GetAmountOfNearbyUnits(Position unitPosition)
         {
+            if (unitPosition == null) throw new ArgumentNullException("unitPosition");
+
             var amount = 0;
 
-            if (_units.ContainsKey(new Position(unitPosition.Row - 1, unitPosition.Column - 1)))
+            if (_units.ContainsKey(new Position(unitPosition.Row - 1, unitPosition.Column - 1))
+                && GetUnitAt(new Position(unitPosition.Row - 1, unitPosition.Column - 1)).Owner == GetUnitAt(unitPosition).Owner)
                 amount++;
-            if (_units.ContainsKey(new Position(unitPosition.Row - 1, unitPosition.Column)))
+            if (_units.ContainsKey(new Position(unitPosition.Row - 1, unitPosition.Column))
+                && GetUnitAt(new Position(unitPosition.Row - 1, unitPosition.Column)).Owner == GetUnitAt(unitPosition).Owner)
                 amount++;
-            if (_units.ContainsKey(new Position(unitPosition.Row - 1, unitPosition.Column + 1)))
+            if (_units.ContainsKey(new Position(unitPosition.Row - 1, unitPosition.Column + 1))
+                && GetUnitAt(new Position(unitPosition.Row - 1, unitPosition.Column + 1)).Owner == GetUnitAt(unitPosition).Owner)
                 amount++;
-            if (_units.ContainsKey(new Position(unitPosition.Row, unitPosition.Column - 1)))
+            if (_units.ContainsKey(new Position(unitPosition.Row, unitPosition.Column - 1))
+                && GetUnitAt(new Position(unitPosition.Row , unitPosition.Column - 1)).Owner == GetUnitAt(unitPosition).Owner)
                 amount++;
-            if (_units.ContainsKey(new Position(unitPosition.Row, unitPosition.Column + 1)))
+            if (_units.ContainsKey(new Position(unitPosition.Row, unitPosition.Column + 1))
+                && GetUnitAt(new Position(unitPosition.Row , unitPosition.Column + 1)).Owner == GetUnitAt(unitPosition).Owner)
                 amount++;
-            if (_units.ContainsKey(new Position(unitPosition.Row + 1, unitPosition.Column - 1)))
+            if (_units.ContainsKey(new Position(unitPosition.Row + 1, unitPosition.Column - 1))
+                && GetUnitAt(new Position(unitPosition.Row + 1, unitPosition.Column - 1)).Owner == GetUnitAt(unitPosition).Owner)
                 amount++;
-            if (_units.ContainsKey(new Position(unitPosition.Row + 1, unitPosition.Column)))
+            if (_units.ContainsKey(new Position(unitPosition.Row + 1, unitPosition.Column))
+                && GetUnitAt(new Position(unitPosition.Row + 1, unitPosition.Column)).Owner == GetUnitAt(unitPosition).Owner)
                 amount++;
-            if (_units.ContainsKey(new Position(unitPosition.Row + 1, unitPosition.Column + 1)))
+            if (_units.ContainsKey(new Position(unitPosition.Row + 1, unitPosition.Column + 1))
+                && GetUnitAt(new Position(unitPosition.Row + 1, unitPosition.Column + 1)).Owner == GetUnitAt(unitPosition).Owner)
                 amount++;
 
             return amount;
