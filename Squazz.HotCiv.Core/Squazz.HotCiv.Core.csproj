@@ -1,83 +1,15 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{485D19EE-4FF4-4FBC-9A35-82E7D0463EFB}</ProjectGuid>
+    <TargetFramework>net5.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Squazz.HotCiv</RootNamespace>
-    <AssemblyName>Squazz.HotCiv.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <ProjectReference Include="..\Squazz.HotCiv.Domain\Squazz.HotCiv.Domain.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="City.cs" />
-    <Compile Include="Game.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Strategies\ActionStrategyDoAction.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Strategies\AgeStrategyAdvanced.cs" />
-    <Compile Include="Strategies\AgeStrategyLinear.cs" />
-    <Compile Include="Strategies\AttackStrategyAdvancedAttack.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Strategies\AttackStrategyAttackerWins.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Strategies\WinningStrategy3Wins.cs" />
-    <Compile Include="Strategies\WinningStrategyCitiesConquered.cs" />
-    <Compile Include="Strategies\WinningStrategyRedWins.cs" />
-    <Compile Include="Strategies\WorldLayoutStrategyAlphaWorld.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Strategies\WorldLayoutStrategyDeltaWorld.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tile.cs" />
-    <Compile Include="Unit.cs" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Squazz.HotCiv.Domain\Squazz.HotCiv.Domain.csproj">
-      <Project>{2ef0e73f-f1ef-43ba-b71a-e63a5dc52525}</Project>
-      <Name>Squazz.HotCiv.Domain</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
