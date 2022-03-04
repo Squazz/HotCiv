@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32002.261
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squazz.HotCiv.Domain", "Squazz.HotCiv.Domain\Squazz.HotCiv.Domain.csproj", "{2EF0E73F-F1EF-43BA-B71A-E63A5DC52525}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9827B681-A8A4-45E5-B2EA-A7DADAD9D957}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squazz.HotCiv.Core", "Squazz.HotCiv.Core\Squazz.HotCiv.Core.csproj", "{485D19EE-4FF4-4FBC-9A35-82E7D0463EFB}"
 EndProject
@@ -33,7 +31,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{66530859-2B22-4B44-9B1D-A793F7C38BEC} = {9827B681-A8A4-45E5-B2EA-A7DADAD9D957}
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {19F0662E-E8C6-456A-8FF0-89147E170BB4}
 	EndGlobalSection
 EndGlobal
